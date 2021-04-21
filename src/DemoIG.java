@@ -24,6 +24,7 @@ public class DemoIG {
                 "",
                 "DÃ©mo Librairie Graphique 1.9 ...	",
                 "Cliquer pour continuer ...",
+                "C'est toi le master ?",
                 ""
         };
         IG.afficherMessage(message); // On change de message de la fenÃªtre de jeu
