@@ -50,8 +50,8 @@ public class MaDemoIG {
             IG.changerImageJoueur(i, numImageJoueur);
         }
         IG.changerPieceHorsPlateau(1, 0);
-        IG.placerJoueurSurPlateau(0, 3, 0);
-        IG.placerJoueurSurPlateau(1, 3, 6);
+        IG.placerJoueurPrecis(0, 3, 0, 1, 0);
+        IG.placerJoueurPrecis(1, 3, 6, 1, 2);
         /**
          * Setup player name, type with parameters
          */
@@ -84,5 +84,79 @@ public class MaDemoIG {
         IG.afficherMessage(message);
         IG.miseAJourAffichage();
         IG.attendreClic();
+
+        /**
+         * Rotation des pieces avec les clics
+         */
+        int rotationCount = 0;
+        int sousColonne = 1;
+        int colonnePlateau = 0;
+        for (int i = 1; i <= 4; i++) {
+            //Change messageClic with correct number of clics
+            String[] messageClic = {
+                    "",
+                    "Après le clic " + i,
+                    "Cliquer pour continuer ...",
+                    ""
+            };
+
+            //Apply transparence on objet with clics and remove this from plateau
+            IG.changerObjetJoueurAvecTransparence(0, rotationCount, rotationCount);
+            IG.enleverObjetPlateau(0, rotationCount);
+
+            //Increment rotationCount
+            rotationCount++;
+
+            //If rotationCount == 4 ->
+            if (rotationCount == 4) {
+                rotationCount = 0;
+            }
+
+            //Allow you to change piece of plateau of game with good rotation count
+            for (int j = 0; j < 7; j++) {
+                for (int k = 0; k < 7; k++) {
+                    IG.changerPiecePlateau(j,k, 2, rotationCount);
+                }
+            }
+
+
+            IG.placerBilleSurPlateau(3, colonnePlateau, 1, sousColonne - 1, 0);
+            IG.placerBilleSurPlateau(3, 6 - colonnePlateau, 1, 2 - (sousColonne - 1), 0);
+            if (sousColonne == 3) {
+                sousColonne = 0;
+                colonnePlateau++;
+            }
+
+            IG.placerJoueurPrecis(0, 3, colonnePlateau,1, sousColonne);
+            IG.placerJoueurPrecis(1, 3, 6 - colonnePlateau,1, 2 - sousColonne);
+            sousColonne++;
+
+            IG.afficherMessage(messageClic);
+            IG.miseAJourAffichage();
+            IG.attendreClic();
+        }
+
+        String[] messageWaitFleche = {
+                "",
+                "Cliquez sur une flèche ",
+                "pour quitter",
+                ""
+        };
+        IG.afficherMessage(messageWaitFleche);
+        IG.miseAJourAffichage();
+        IG.attendreClic();
+        IG.attendreChoixEntree();
+
+        String[] messageStopProcess = {
+                "",
+                "Arrêt du programme ",
+                "dans 2 secondes ! ",
+                ""
+        };
+        IG.afficherMessage(messageStopProcess);
+        IG.miseAJourAffichage();
+        IG.pause(2000);
+        IG.fermerFenetreJeu();
+        System.exit(0);
     }
 }
