@@ -148,5 +148,5 @@ abstract public class Piece {
      *
      * @return Une copie de la piÃ¨ce.
      */
-    public abstract Piece copy();
+    public abstract Piece copy() throws CloneNotSupportedException;
 }
