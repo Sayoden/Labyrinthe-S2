@@ -15,7 +15,7 @@ public class PieceM1 extends Piece {
     }
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (03/05/21 LG Finalisée)
      * <p>
      * MÃ©thode permettant de crÃ©er une copie de la piÃ¨ce (un nouvelle objet Java).
      *

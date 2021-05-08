@@ -113,7 +113,7 @@ abstract public class Piece {
     }
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (23/04/21 LG Finalisée)
      * <p>
      * MÃ©thode permettant de crÃ©er un tableau contenant toutes les piÃ¨ces du jeu (les 50 piÃ¨ces).
      * Le tableau contiendra 20 piÃ¨ces du modÃ¨le 0, 12 piÃ¨ces du modÃ¨le 1 et 18 piÃ¨ces du modÃ¨le 2.
