@@ -1,5 +1,4 @@
 package tests;
-
 import grafix.interfaceGraphique.IG;
 
 public class MaDemoIG {
@@ -119,9 +118,11 @@ public class MaDemoIG {
                 }
             }
 
+            IG.changerPieceHorsPlateau(1,rotationCount);
 
-            IG.placerBilleSurPlateau(3, colonnePlateau, 1, sousColonne - 1, 0);
-            IG.placerBilleSurPlateau(3, 6 - colonnePlateau, 1, 2 - (sousColonne - 1), 0);
+
+            IG.placerBilleSurPlateau(3, colonnePlateau, 1, sousColonne - 1, 2);
+            IG.placerBilleSurPlateau(3, 6 - colonnePlateau, 1, 2 - (sousColonne - 1), 2);
             if (sousColonne == 3) {
                 sousColonne = 0;
                 colonnePlateau++;
@@ -154,9 +155,11 @@ public class MaDemoIG {
                 ""
         };
         IG.afficherMessage(messageStopProcess);
+        IG.afficherGagnant(0);
         IG.miseAJourAffichage();
         IG.pause(2000);
         IG.fermerFenetreJeu();
         System.exit(0);
+
     }
 }
