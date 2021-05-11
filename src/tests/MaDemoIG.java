@@ -143,6 +143,7 @@ public class MaDemoIG {
                 "pour quitter",
                 ""
         };
+        IG.afficherGagnant(0);
         IG.afficherMessage(messageWaitFleche);
         IG.miseAJourAffichage();
         IG.attendreClic();
@@ -155,7 +156,6 @@ public class MaDemoIG {
                 ""
         };
         IG.afficherMessage(messageStopProcess);
-        IG.afficherGagnant(0);
         IG.miseAJourAffichage();
         IG.pause(2000);
         IG.fermerFenetreJeu();
