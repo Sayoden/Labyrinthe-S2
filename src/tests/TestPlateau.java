@@ -47,8 +47,6 @@ public class TestPlateau {
             IG.changerNomJoueur(i, nomJoueur + " (" + categorieJoueur + ")");
             IG.changerImageJoueur(i, numImageJoueur);
         }
-        IG.placerJoueurPrecis(0, 3, 0, 1, 0);
-        IG.placerJoueurPrecis(1, 3, 6, 1, 2);
         /**
          * Setup player name, type with parameters
          */
@@ -58,6 +56,7 @@ public class TestPlateau {
 
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 7; j++) {
+                System.out.println(i + " " + j);
                 IG.changerPiecePlateau(i,j, plateau.getPiece(i,j).getModelePiece(), plateau.getPiece(i,j).getOrientationPiece());
             }
         }

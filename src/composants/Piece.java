@@ -1,6 +1,7 @@
 package composants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -73,7 +74,7 @@ abstract public class Piece {
      * @param orientationPiece Un entier correspondant Ã  la nouvelle orientation de la piÃ¨ce.
      */
     public void setOrientation(int orientationPiece) {
-        for (int i = 0; i < orientationPiece; i++) {
+        for (int i = this.orientationPiece; i < orientationPiece; i++) {
             rotation();
         }
     }
@@ -129,15 +130,15 @@ abstract public class Piece {
         for (int i : random) {
             if (compteur < 20) {
                 PieceM0 pieceTemp = new PieceM0();
-                pieceTemp.setOrientation(Utils.genererEntier(3));
+                pieceTemp.setOrientation(Utils.genererEntier(4));
                 pieces[i] = pieceTemp;
             } else if (compteur < 32) {
                 PieceM1 pieceTemp = new PieceM1();
-                pieceTemp.setOrientation(Utils.genererEntier(3));
+                pieceTemp.setOrientation(Utils.genererEntier(4));
                 pieces[i] = pieceTemp;
             } else if (compteur < 50) {
                 PieceM2 pieceTemp = new PieceM2();
-                pieceTemp.setOrientation(Utils.genererEntier(3));
+                pieceTemp.setOrientation(Utils.genererEntier(4));
                 pieces[i] = pieceTemp;
             }
             compteur++;
