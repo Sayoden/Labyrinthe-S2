@@ -19,10 +19,9 @@ Code durant la fin des vacances d'avril/mai
 
 11 mai : petites modifications 
 
-12 mai : finalisation de l'étape
 
 ## Etape 3 
 
 Début du code le 6 mai
 
-13-14 mai : grande avancée dans le code de l'étape 3.
+à terminer
