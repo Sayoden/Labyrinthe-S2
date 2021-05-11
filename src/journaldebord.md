@@ -17,8 +17,7 @@ Code durant la fin des vacances d'avril/mai
 
 9 mai : correction de certaines erreurs
 
-11 mai : petites modifications + corrections des méthodes 
-nouvellesPiece et setOrientations ont été modifiés ajd
+11 mai : petites modifications 
 
 
 ## Etape 3 
