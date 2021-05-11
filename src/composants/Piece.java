@@ -124,20 +124,23 @@ abstract public class Piece {
     public static Piece[] nouvellesPieces() {
         Piece[] pieces = new Piece[50];
 
-        for (int i = 0; i < 20; i++) {
-            PieceM0 pieceTemp = new PieceM0();
-            pieceTemp.setOrientation(Utils.genererEntier(3));
-            pieces[i] = pieceTemp;
-        }
-        for (int i = 20; i < 32; i++) {
-            PieceM1 pieceTemp = new PieceM1();
-            pieceTemp.setOrientation(Utils.genererEntier(3));
-            pieces[i] = pieceTemp;
-        }
-        for (int i = 32; i < 50; i++) {
-            PieceM2 pieceTemp = new PieceM2();
-            pieceTemp.setOrientation(Utils.genererEntier(3));
-            pieces[i] = pieceTemp;
+        int[] random = Utils.genereTabIntAleatoirement(50);
+        int compteur = 0;
+        for (int i : random) {
+            if (compteur < 20) {
+                PieceM0 pieceTemp = new PieceM0();
+                pieceTemp.setOrientation(Utils.genererEntier(3));
+                pieces[i] = pieceTemp;
+            } else if (compteur < 32) {
+                PieceM1 pieceTemp = new PieceM1();
+                pieceTemp.setOrientation(Utils.genererEntier(3));
+                pieces[i] = pieceTemp;
+            } else if (compteur < 50) {
+                PieceM2 pieceTemp = new PieceM2();
+                pieceTemp.setOrientation(Utils.genererEntier(3));
+                pieces[i] = pieceTemp;
+            }
+            compteur++;
         }
 
         return pieces;

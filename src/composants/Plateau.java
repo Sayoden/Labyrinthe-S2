@@ -61,7 +61,7 @@ public class Plateau {
             this.plateau[i / 7][i % 7] = pieces[i];
         }
 
-        return pieces[50];
+        return pieces[49];
     }
 
     /**
@@ -101,6 +101,14 @@ public class Plateau {
 
         if ((posLigCase1 != posLigCase2) && (posColCase1 != posColCase2)
                 && casesAdjacentes(posLigCase1, posColCase1, posLigCase2, posColCase2)) {
+
+            Piece piece1 = getPiece(posLigCase1, posColCase1);
+            Piece piece2 = getPiece(posLigCase2, posColCase2);
+
+            if (piece1.getPointEntree(0) && piece2.getPointEntree(2)) return true;
+            if (piece1.getPointEntree(1) && piece2.getPointEntree(3)) return true;
+            if (piece1.getPointEntree(2) && piece2.getPointEntree(0)) return true;
+            if (piece1.getPointEntree(3) && piece2.getPointEntree(1)) return true;
 
         }
 
