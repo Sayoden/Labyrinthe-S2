@@ -1,7 +1,5 @@
 package composants;
 
-import grafix.interfaceGraphique.IG;
-
 /**
  * Cette classe permet de gÃ©rer un plateau de jeu constituÃ© d'une grille de piÃ¨ces (grille de 7 lignes sur 7 colonnes).
  */

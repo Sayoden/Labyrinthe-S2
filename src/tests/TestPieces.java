@@ -25,6 +25,10 @@ public class TestPieces {
         IG.pause(300);
         IG.jouerUnSon(2);
 
+        IG.afficherMessage(message);
+        IG.miseAJourAffichage();
+        IG.attendreClic();
+
         Piece[] pieces = Piece.nouvellesPieces();
 
         int compteur = 0;
@@ -35,11 +39,11 @@ public class TestPieces {
             }
         }
         IG.changerPieceHorsPlateau(pieces[compteur].getModelePiece(), pieces[compteur].getOrientationPiece());
+
         IG.miseAJourAffichage();
         IG.attendreClic();
-        IG.afficherMessage(message);
 
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 0; i <= 3; i++) {
             compteur = 0;
             for (int j = 0; j < 7; j++) {
                 for (int k = 0; k < 7; k++) {
@@ -54,5 +58,9 @@ public class TestPieces {
             IG.miseAJourAffichage();
             IG.attendreClic();
         }
+
+        IG.fermerFenetreJeu();
+        System.exit(0);
+
     }
 }
