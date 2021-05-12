@@ -12,6 +12,7 @@ abstract public class Piece {
     private int modelePiece;        // Le modÃ¨le de la piÃ¨ce
     private int orientationPiece;    // L'orientation de la piÃ¨ce
     private boolean[] pointsEntree; // Les points d'entrÃ©e indice 0 pour le haut, 1 pour la droite, 2 pour le bas et 3 pour la gauche.
+    private static final int NB_ENTREE = 4;
 
     /**
      * A Faire (23/04/21 LG Finalisée)
@@ -27,7 +28,7 @@ abstract public class Piece {
     public Piece(int modelePiece, boolean pointEntreeHaut, boolean pointEntreeDroite, boolean pointEntreeBas, boolean pointEntreeGauche) {
         this.modelePiece = modelePiece;
         this.orientationPiece = 0;
-        this.pointsEntree = new boolean[4];
+        this.pointsEntree = new boolean[NB_ENTREE];
         this.pointsEntree[0] = pointEntreeHaut;
         this.pointsEntree[1] = pointEntreeDroite;
         this.pointsEntree[2] = pointEntreeBas;
@@ -129,18 +130,13 @@ abstract public class Piece {
         int compteur = 0;
         for (int i : random) {
             if (compteur < 20) {
-                PieceM0 pieceTemp = new PieceM0();
-                pieceTemp.setOrientation(Utils.genererEntier(4));
-                pieces[i] = pieceTemp;
+                pieces[i] = new PieceM0();
             } else if (compteur < 32) {
-                PieceM1 pieceTemp = new PieceM1();
-                pieceTemp.setOrientation(Utils.genererEntier(4));
-                pieces[i] = pieceTemp;
+                pieces[i] = new PieceM1();
             } else if (compteur < 50) {
-                PieceM2 pieceTemp = new PieceM2();
-                pieceTemp.setOrientation(Utils.genererEntier(4));
-                pieces[i] = pieceTemp;
+                pieces[i] = new PieceM2();
             }
+            pieces[i].setOrientation(Utils.genererEntier(4));
             compteur++;
         }
 
