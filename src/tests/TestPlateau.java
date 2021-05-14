@@ -56,13 +56,10 @@ public class TestPlateau {
 
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 7; j++) {
-                plateau.calculeChemin(i,j, i + 1,j + 1);
                 IG.changerPiecePlateau(i,j, plateau.getPiece(i,j).getModelePiece(), plateau.getPiece(i,j).getOrientationPiece());
             }
         }
-
-
-
+        plateau.calculeChemin(3,3, 3 + 1,3 + 1);
         IG.miseAJourAffichage();
     }
 }
