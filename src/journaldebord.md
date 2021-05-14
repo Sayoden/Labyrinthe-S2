@@ -26,4 +26,4 @@ nouvellesPiece et setOrientations ont été modifiés ajd
 
 Début du code le 6 mai
 
-à terminer
+13-14 mai : grande avancée dans le code de l'étape 3.
