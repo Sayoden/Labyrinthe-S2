@@ -1,5 +1,7 @@
 package composants;
 
+import java.util.Arrays;
+
 /**
  * Cette classe permet de gÃ©rer un plateau de jeu constituÃ© d'une grille de piÃ¨ces (grille de 7 lignes sur 7 colonnes).
  */
@@ -96,20 +98,26 @@ public class Plateau {
      * @return true si les positions passÃ©es en paramÃ¨tre sont les positions de deux cases diffÃ©rentes et adjacentes de la grille de jeu et qu'il est possible de passer d'une cas Ã  l'autre compte tenu des deux piÃ¨ces posÃ©es sur les deux cases du plateau, false sinon.
      */
     private boolean passageEntreCases(int posLigCase1, int posColCase1, int posLigCase2, int posColCase2) {
-
-        if ((posLigCase1 != posLigCase2) && (posColCase1 != posColCase2)
+        if ((posLigCase1 == posLigCase2 ^ posColCase1 == posColCase2)
                 && casesAdjacentes(posLigCase1, posColCase1, posLigCase2, posColCase2)) {
 
             Piece piece1 = getPiece(posLigCase1, posColCase1);
             Piece piece2 = getPiece(posLigCase2, posColCase2);
 
-            if (piece1.getPointEntree(0) && piece2.getPointEntree(2)) return true;
-            if (piece1.getPointEntree(1) && piece2.getPointEntree(3)) return true;
-            if (piece1.getPointEntree(2) && piece2.getPointEntree(0)) return true;
-            if (piece1.getPointEntree(3) && piece2.getPointEntree(1)) return true;
-
+            if (posLigCase1 == posLigCase2) {
+                if (posColCase1 < posColCase2) {
+                    return piece1.getPointEntree(1) && piece2.getPointEntree(3);
+                } else {
+                    return piece1.getPointEntree(3) && piece2.getPointEntree(1);
+                }
+            } else {
+                if (posLigCase1 < posLigCase2) {
+                    return piece1.getPointEntree(2) && piece2.getPointEntree(0);
+                } else {
+                    return piece1.getPointEntree(0) && piece2.getPointEntree(2);
+                }
+            }
         }
-
         return false;
     }
 
@@ -133,9 +141,60 @@ public class Plateau {
     public int[][] calculeChemin(int posLigCaseDep, int posColCaseDep, int posLigCaseArr, int posColCaseArr) {
         int resultat[][] = null;
 
-        // A ComplÃ©ter
+        Piece[] intersections = null;
+
+        Piece pieceActuelle = this.plateau[posLigCaseDep][posColCaseDep];
+        int posLigCaseAct = posLigCaseDep;
+        int posColCaseAct = posColCaseDep;
+
+        //for (int i = 0; i <= 10; i++) {
+            boolean[] cheminsPossible = possibiliteCasesAdjacentes(posLigCaseAct, posColCaseAct);
+            System.out.println(Arrays.toString(cheminsPossible));
+        //}
+
 
         return resultat;
+    }
+
+    /**
+     * A Faire (14/05/2021 LG En cours)
+     * <p>
+     * Méthode permettant de retourner les différents chemins possibles sous forme de boolean vers les cases adjacentes
+     * en fonction de la piece donnée en argument.
+     *
+     * @param posLigCase La ligne de la case (un entier compris entre 0 et 6).
+     * @param posColCase La colonne de la case (un entier compris entre 0 et 6).
+     * @return le tableau des possibilité de déplacement vers les cases adjacentes
+     */
+    public boolean[] possibiliteCasesAdjacentes(int posLigCase, int posColCase) {
+        boolean[] possibilites = {false, false, false, false};
+
+        for (int i = 0; i <= 3; i++) {
+            switch (i) {
+                case 0:
+                    if (passageEntreCases(posLigCase, posColCase, posLigCase - 1, posColCase)) {
+                        possibilites[i] = true;
+                    }
+                    break;
+                case 1:
+                    if (passageEntreCases(posLigCase, posColCase, posLigCase, posColCase + 1)) {
+                        possibilites[i] = true;
+                    }
+                    break;
+                case 2:
+                    if (passageEntreCases(posLigCase, posColCase, posLigCase + 1, posColCase)) {
+                        possibilites[i] = true;
+                    }
+                    break;
+                case 3:
+                    if (passageEntreCases(posLigCase, posColCase, posLigCase, posColCase - 1)) {
+                        possibilites[i] = true;
+                    }
+                    break;
+            }
+        }
+
+        return possibilites;
     }
 
 
