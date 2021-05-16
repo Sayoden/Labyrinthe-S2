@@ -155,7 +155,7 @@ public class Plateau {
         int key = 1;
         for (int i = 0; i <= 45; i++) {
             cheminsPossible = possibiliteCasesAdjacentes(posLigCaseAct, posColCaseAct);
-            System.out.println("Position ligne: " + posLigCaseAct + " et position colonne: " + posColCaseAct);
+            IG.pause(200);
             IG.placerBilleSurPlateau(posLigCaseAct, posColCaseAct, 1, 1, 1);
             IG.miseAJourAffichage();
 
@@ -165,15 +165,8 @@ public class Plateau {
 
             if (estRetourneEnArriere) {
                 estRetourneEnArriere = false;
-                System.out.println(Arrays.toString(cheminsPossible));
-                System.out.println(intersections.containsKey(key));
                 cheminsPossible = (boolean[]) intersections.get(key)[0];
-                System.out.println(Arrays.toString(cheminsPossible));
-                int test = ((int[]) intersections.get(1)[1])[0];
-                int test2 = ((int[]) intersections.get(1)[1])[1];
-                System.out.println("POS HASHMAP: " + test + " " + test2 + " ET POS NORMAL");
                 if (key != 1) {
-                    System.out.println("JE SUIS REMOVE LA PUTAIN DTAL MERE");
                     intersections.remove(key);
                     key--;
                 }
@@ -194,30 +187,28 @@ public class Plateau {
                             case 3 -> posColCaseAct--;
                         }
                         cheminsPossible[j] = false;
-                        for (Map.Entry<Integer, Object[]> intersection : intersections.entrySet()) {
-                            if (((int[]) intersection.getValue()[1])[0] == posLigCaseAct && ((int[]) intersection.getValue()[1])[1] == posColCaseAct) {
-                                for (int n = intersection.getKey(); n <= intersections.size(); n++) {
-                                    intersections.remove(n);
+                        if (key > 1) {
+                            List<Integer> remove = new ArrayList<>();
+                            for (Map.Entry<Integer, Object[]> intersection : intersections.entrySet()) {
+                                if (((int[]) intersection.getValue()[1])[0] == posLigCaseAct && ((int[]) intersection.getValue()[1])[1] == posColCaseAct) {
+                                    for (int n = intersection.getKey(); n <= intersections.size(); n++) {
+                                        remove.add(n);
+                                    }
+                                    key = intersection.getKey() - 1;
                                 }
-                                key = intersection.getKey() - 1;
                             }
+                            remove.forEach(intersections::remove);
                         }
                     }
                 }
             }
 
             if (compteur >= 2) {
-                System.out.println("Je suis supérieur à 2, nouvelle intersection");
-                int test = ((int[]) intersections.get(1)[1])[0];
-                int test2 = ((int[]) intersections.get(1)[1])[1];
-                System.out.println(test + " " + test2);
                 if (!(((int[]) intersections.get(1)[1])[0] == tempPosLigne && ((int[]) intersections.get(1)[1])[1] == tempPosColonne)) {
-                    System.out.println("Je n'étais pas dans la HashMap");
                     key++;
                     intersections.put(key, new Object[]{cheminsPossible, new int[]{tempPosLigne, tempPosColonne}});
                 }
             } else if (compteur == 0) {
-                //On retourne à l'ancienne intersection car plus aucune possibilité
                 posLigCaseAct = ((int[]) intersections.get(key)[1])[0];
                 posColCaseAct = ((int[]) intersections.get(key)[1])[1];
                 estRetourneEnArriere = true;
