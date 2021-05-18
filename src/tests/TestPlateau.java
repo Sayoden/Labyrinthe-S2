@@ -59,7 +59,8 @@ public class TestPlateau {
                 IG.changerPiecePlateau(i,j, plateau.getPiece(i,j).getModelePiece(), plateau.getPiece(i,j).getOrientationPiece());
             }
         }
-        plateau.calculeChemin(3,3, 3 + 1,3 + 1);
+        IG.miseAJourAffichage();
+        plateau.calculeChemin(3,3, 1,1);
         IG.miseAJourAffichage();
     }
 }

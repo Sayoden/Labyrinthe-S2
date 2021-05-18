@@ -3,6 +3,8 @@ package composants;
 import grafix.interfaceGraphique.IG;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Cette classe permet de gÃ©rer un plateau de jeu constituÃ© d'une grille de piÃ¨ces (grille de 7 lignes sur 7 colonnes).
@@ -141,117 +143,89 @@ public class Plateau {
      * @return null si il n'existe pas de chemin entre les deux case, un chemin sinon.
      */
     public int[][] calculeChemin(int posLigCaseDep, int posColCaseDep, int posLigCaseArr, int posColCaseArr) {
-        int resultat[][] = null;
-
-        HashMap<Integer, Object[]> intersections = new HashMap<>();
-        intersections.put(1, new Object[]{possibiliteCasesAdjacentes(posLigCaseDep, posColCaseDep), new int[]{posLigCaseDep, posColCaseDep}});
-
-        int posLigCaseAct = posLigCaseDep;
-        int posColCaseAct = posColCaseDep;
-        int ancienneSortie = 0;
-        boolean[] cheminsPossible;
-
-        boolean estRetourneEnArriere = false;
-        int key = 1;
-        for (int i = 0; i <= 45; i++) {
-            cheminsPossible = possibiliteCasesAdjacentes(posLigCaseAct, posColCaseAct);
-            IG.pause(200);
-            IG.placerBilleSurPlateau(posLigCaseAct, posColCaseAct, 1, 1, 1);
-            IG.miseAJourAffichage();
-
-            if (i >= 1 && !estRetourneEnArriere) {
-                cheminsPossible[ancienneSortie] = false;
-            }
-
-            if (estRetourneEnArriere) {
-                estRetourneEnArriere = false;
-                cheminsPossible = (boolean[]) intersections.get(key)[0];
-                if (key != 1) {
-                    intersections.remove(key);
-                    key--;
-                }
-            }
-
-            int tempPosLigne = posLigCaseAct;
-            int tempPosColonne = posColCaseAct;
-            int compteur = 0;
-            for (int j = 0; j < cheminsPossible.length; j++) {
-                if (cheminsPossible[j]) {
-                    compteur++;
-                    if (compteur == 1) {
-                        ancienneSortie = (j + 2) % 4;
-                        switch (j) {
-                            case 0 -> posLigCaseAct--;
-                            case 1 -> posColCaseAct++;
-                            case 2 -> posLigCaseAct++;
-                            case 3 -> posColCaseAct--;
+        int[][] resultat = null;
+        List<int[]> listExecution = new ArrayList<>();
+        List<int[]> exclusion = new ArrayList<>();
+        listExecution.add(new int[]{posLigCaseDep, posColCaseDep});
+        boolean cheminPossible = true;
+        outer:
+        while (cheminPossible) {
+            for (int[] ints : new ArrayList<>(listExecution)) {
+                System.out.println("Ligne: " + ints[0] + " Colonne: " + ints[1]);
+                if (ints[0] == posLigCaseArr && ints[1] == posColCaseArr) {
+                    System.out.println("Chemin trouvé !");
+                    break outer;
+                } else {
+                    exclusion.add(new int[]{ints[0], ints[1]});
+                    ArrayList<int[]> possibilites = possibiliteCasesAdjacentes(ints[0], ints[1], exclusion);
+                    possibilites.forEach(possible -> {
+                        if (exclusion.stream().noneMatch(x -> x[0] == possible[0] && x[1] == possible[1])) {
+                            exclusion.add(possible);
                         }
-                        cheminsPossible[j] = false;
-                        if (key > 1) {
-                            List<Integer> remove = new ArrayList<>();
-                            for (Map.Entry<Integer, Object[]> intersection : intersections.entrySet()) {
-                                if (((int[]) intersection.getValue()[1])[0] == posLigCaseAct && ((int[]) intersection.getValue()[1])[1] == posColCaseAct) {
-                                    for (int n = intersection.getKey(); n <= intersections.size(); n++) {
-                                        remove.add(n);
-                                    }
-                                    key = intersection.getKey() - 1;
-                                }
-                            }
-                            remove.forEach(intersections::remove);
-                        }
-                    }
+                    });
+                    listExecution.addAll(possibilites);
+                    listExecution.removeIf(test -> test[0] == ints[0] && test[1] == ints[1]);
+                    IG.placerBilleSurPlateau(ints[0], ints[1], 1, 1, 1);
                 }
             }
-
-            if (compteur >= 2) {
-                if (!(((int[]) intersections.get(1)[1])[0] == tempPosLigne && ((int[]) intersections.get(1)[1])[1] == tempPosColonne)) {
-                    key++;
-                    intersections.put(key, new Object[]{cheminsPossible, new int[]{tempPosLigne, tempPosColonne}});
-                }
-            } else if (compteur == 0) {
-                posLigCaseAct = ((int[]) intersections.get(key)[1])[0];
-                posColCaseAct = ((int[]) intersections.get(key)[1])[1];
-                estRetourneEnArriere = true;
+            if (listExecution.size() == 0) {
+                cheminPossible = false;
             }
         }
+
         return resultat;
     }
 
     /**
      * A Faire (14/05/2021 LG En cours)
      * <p>
-     * Méthode permettant de retourner les différents chemins possibles sous forme de boolean vers les cases adjacentes
-     * en fonction de la piece donnée en argument.
+     * Méthode permettant de retourner les différents chemins possibles sous forme de tableau de coordonnées vers les cases
+     * adjacentes en fonction de la piece donnée en argument.
      *
      * @param posLigCase La ligne de la case (un entier compris entre 0 et 6).
      * @param posColCase La colonne de la case (un entier compris entre 0 et 6).
-     * @return le tableau des possibilité de déplacement vers les cases adjacentes
+     * @return le tableau des coordonnées des possibilités de déplacement vers les cases adjacentes
      */
-    public boolean[] possibiliteCasesAdjacentes(int posLigCase, int posColCase) {
-        boolean[] possibilites = {false, false, false, false};
+    public ArrayList<int[]> possibiliteCasesAdjacentes(int posLigCase, int posColCase, List<int[]> exclude) {
+        ArrayList<int[]> possibilites = new ArrayList<>();
 
+        int[] posNow;
+        List<int[]> passage = new ArrayList<>();
         for (int i = 0; i <= 3; i++) {
             switch (i) {
-                case 0:
-                    if (passageEntreCases(posLigCase, posColCase, posLigCase - 1, posColCase)) {
-                        possibilites[i] = true;
+                case 0 -> {
+                    posNow = new int[]{posLigCase - 1, posColCase};
+                    if (passageEntreCases(posLigCase, posColCase, posNow[0], posNow[1])) {
+                        passage.add(posNow);
                     }
-                    break;
-                case 1:
-                    if (passageEntreCases(posLigCase, posColCase, posLigCase, posColCase + 1)) {
-                        possibilites[i] = true;
+                }
+                case 1 -> {
+                    posNow = new int[]{posLigCase, posColCase + 1};
+                    if (passageEntreCases(posLigCase, posColCase, posNow[0], posNow[1])) {
+                        passage.add(posNow);
                     }
-                    break;
-                case 2:
-                    if (passageEntreCases(posLigCase, posColCase, posLigCase + 1, posColCase)) {
-                        possibilites[i] = true;
+                }
+                case 2 -> {
+                    posNow = new int[]{posLigCase + 1, posColCase};
+                    if (passageEntreCases(posLigCase, posColCase, posNow[0], posNow[1])) {
+                        passage.add(posNow);
                     }
-                    break;
-                case 3:
-                    if (passageEntreCases(posLigCase, posColCase, posLigCase, posColCase - 1)) {
-                        possibilites[i] = true;
+                }
+                case 3 -> {
+                    posNow = new int[]{posLigCase, posColCase - 1};
+                    if (passageEntreCases(posLigCase, posColCase, posNow[0], posNow[1])) {
+                        passage.add(posNow);
                     }
-                    break;
+                }
+            }
+        }
+        for (int[] ints : passage) {
+            if (exclude.size() == 0) {
+                possibilites.add(ints);
+            } else {
+                if (exclude.stream().noneMatch(x -> x[0] == ints[0] && x[1] == ints[1])) {
+                    possibilites.add(ints);
+                }
             }
         }
 
