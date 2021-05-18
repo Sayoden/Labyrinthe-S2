@@ -11,7 +11,7 @@ avant le 26 avril :
 
 11 mai : modification et ajustement de la partie 4 de l'étape 1
 
-
+18 mais : nouvelle version de nos sprites (changement d'écran d'affichage)
 ## Etape 2
 Code durant la fin des vacances d'avril/mai
 
@@ -24,4 +24,4 @@ Code durant la fin des vacances d'avril/mai
 
 Début du code le 6 mai
 
-à terminer
+13-14 mai : grande avancée dans le code de l'étape 3.
