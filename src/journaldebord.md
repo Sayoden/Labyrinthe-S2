@@ -29,3 +29,7 @@ Début du code le 6 mai
 17 mai : changement intégral de la méthode calculeChemin().
 
 18-19 mai : finalisation de l'étape 3
+
+19-20 mai : finition de calculeChemin() avec les membres du groupe.
+
+## Etape 4
