@@ -29,6 +29,7 @@ public class TestObjet {
         Objet[] objects = Objet.nouveauxObjets();
 
         for (Objet objet : objects) {
+            System.out.println(objet.getPosLignePlateau() + " " + objet.getPosColonnePlateau());
             IG.placerObjetPlateau(objet.getNumeroObjet(), objet.getPosLignePlateau(), objet.getPosColonnePlateau());
         }
 

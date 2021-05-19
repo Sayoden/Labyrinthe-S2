@@ -3,8 +3,7 @@ package composants;
 import grafix.interfaceGraphique.IG;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Cette classe permet de gÃ©rer un plateau de jeu constituÃ© d'une grille de piÃ¨ces (grille de 7 lignes sur 7 colonnes).
@@ -126,7 +125,7 @@ public class Plateau {
     }
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (07/05/2021 LG,CD,LI Finalisée)
      * <p>
      * MÃ©thode permettant de retourner un Ã©ventuel chemin entre deux cases du plateau compte tenu des piÃ¨ces posÃ©es sur le plateau.
      * Dans le cas oÃ¹ il n'y a pas de chemin entre les deux cases, la valeur null est retournÃ©e.
@@ -144,35 +143,66 @@ public class Plateau {
      */
     public int[][] calculeChemin(int posLigCaseDep, int posColCaseDep, int posLigCaseArr, int posColCaseArr) {
         int[][] resultat = null;
+
         List<int[]> listExecution = new ArrayList<>();
         List<int[]> exclusion = new ArrayList<>();
+        HashMap<List<Integer>, int[][]> cheminsMap = new HashMap<>();
+
         listExecution.add(new int[]{posLigCaseDep, posColCaseDep});
         boolean cheminPossible = true;
+
         outer:
         while (cheminPossible) {
             for (int[] ints : new ArrayList<>(listExecution)) {
-                System.out.println("Ligne: " + ints[0] + " Colonne: " + ints[1]);
-                if (ints[0] == posLigCaseArr && ints[1] == posColCaseArr) {
-                    System.out.println("Chemin trouvé !");
-                    break outer;
+                exclusion.add(new int[]{ints[0], ints[1]});
+                ArrayList<int[]> possibilites = possibiliteCasesAdjacentes(ints[0], ints[1], exclusion);
+                possibilites.forEach(possible -> {
+                    if (exclusion.stream().noneMatch(x -> x[0] == possible[0] && x[1] == possible[1])) {
+                        exclusion.add(possible);
+                    }
+                });
+                listExecution.addAll(possibilites);
+                listExecution.removeIf(remove -> remove[0] == ints[0] && remove[1] == ints[1]);
+
+                if (cheminsMap.size() == 0) {
+                    cheminsMap.put(Arrays.asList(ints[0], ints[1]), new int[][]{new int[]{ints[0], ints[1]}});
                 } else {
-                    exclusion.add(new int[]{ints[0], ints[1]});
-                    ArrayList<int[]> possibilites = possibiliteCasesAdjacentes(ints[0], ints[1], exclusion);
-                    possibilites.forEach(possible -> {
-                        if (exclusion.stream().noneMatch(x -> x[0] == possible[0] && x[1] == possible[1])) {
-                            exclusion.add(possible);
+                    ArrayList<int[]> cheminsAvant = possibiliteCasesAdjacentes(ints[0], ints[1], null);
+                    ArrayList<int[][]> cheminsTemp = new ArrayList<>();
+                    cheminsAvant.forEach(chemin -> {
+                        if (cheminsMap.containsKey(Arrays.asList(chemin[0], chemin[1]))) {
+                            cheminsTemp.add(new int[][]{chemin});
+                            int[][] test = cheminsMap.get(Arrays.asList(cheminsTemp.get(0)[0][0], cheminsTemp.get(0)[0][1]));
+                            int[][] test2 = new int[test.length + 1][2];
+                            for (int i = 0; i < test2.length; i++) {
+                                if (i >= test.length) {
+                                    test2[i][0] = ints[0];
+                                    test2[i][1] = ints[1];
+                                } else {
+                                    test2[i][0] = test[i][0];
+                                    test2[i][1] = test[i][1];
+                                }
+                            }
+                            cheminsMap.put(Arrays.asList(ints[0], ints[1]), test2);
                         }
                     });
-                    listExecution.addAll(possibilites);
-                    listExecution.removeIf(test -> test[0] == ints[0] && test[1] == ints[1]);
-                    IG.placerBilleSurPlateau(ints[0], ints[1], 1, 1, 1);
+                    if (ints[0] == posLigCaseArr && ints[1] == posColCaseArr) {
+                        int[][] cheminFinal = new int[0][];
+                        for (Map.Entry<List<Integer>, int[][]> entry : cheminsMap.entrySet()) {
+                            if (entry.getValue()[entry.getValue().length - 1][0] == posLigCaseArr && entry.getValue()[entry.getValue().length - 1][1] == posColCaseArr) {
+                                if (cheminFinal.length <= entry.getValue().length) {
+                                    cheminFinal = entry.getValue();
+                                }
+                            }
+                        }
+                        return cheminFinal;
+                    }
                 }
             }
             if (listExecution.size() == 0) {
                 cheminPossible = false;
             }
         }
-
         return resultat;
     }
 
@@ -220,7 +250,7 @@ public class Plateau {
             }
         }
         for (int[] ints : passage) {
-            if (exclude.size() == 0) {
+            if (exclude == null || exclude.size() == 0) {
                 possibilites.add(ints);
             } else {
                 if (exclude.stream().noneMatch(x -> x[0] == ints[0] && x[1] == ints[1])) {
@@ -228,7 +258,6 @@ public class Plateau {
                 }
             }
         }
-
         return possibilites;
     }
 

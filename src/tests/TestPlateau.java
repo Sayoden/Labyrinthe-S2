@@ -4,6 +4,8 @@ import composants.Piece;
 import composants.Plateau;
 import grafix.interfaceGraphique.IG;
 
+import java.util.Arrays;
+
 public class TestPlateau {
 
     public static void main(String[] args) {
@@ -60,7 +62,15 @@ public class TestPlateau {
             }
         }
         IG.miseAJourAffichage();
-        plateau.calculeChemin(3,3, 1,1);
+        int[][] resultat = plateau.calculeChemin(0,0, 1,0);
+        if (resultat == null) {
+            System.out.println("Aucun chemin possible.");
+        } else {
+            System.out.println(Arrays.deepToString(resultat));
+            for (int[] ints : resultat) {
+                IG.placerBilleSurPlateau(ints[0], ints[1], 1, 1, 1);
+            }
+        }
         IG.miseAJourAffichage();
     }
 }
