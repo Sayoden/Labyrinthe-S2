@@ -27,3 +27,7 @@ nouvellesPiece et setOrientations ont été modifiés ajd
 Début du code le 6 mai
 
 13-14 mai : grande avancée dans le code de l'étape 3.
+
+17 mai : changement intégral de la méthode calculeChemin().
+
+18-19 mai : finalisation de l'étape 3
