@@ -33,3 +33,5 @@ Début du code le 6 mai
 19-20 mai : finition de calculeChemin() avec les membres du groupe.
 
 ## Etape 4
+
+22 mai : commencement de l'étape 4
