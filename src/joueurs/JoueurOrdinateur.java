@@ -1,5 +1,4 @@
 package joueurs;
-import composants.Objet;
 import grafix.interfaceGraphique.IG;
 import partie.ElementsPartie;
 
@@ -51,11 +50,6 @@ public class JoueurOrdinateur extends Joueur{
         resultat[0]=this.getPosLigne();
         resultat[1]=this.getPosColonne();
         return resultat;
-    }
-
-    @Override
-    public Joueur copy(Objet[] objets) {
-        return null;
     }
 
 
