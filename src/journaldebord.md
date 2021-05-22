@@ -17,10 +17,8 @@ Code durant la fin des vacances d'avril/mai
 
 9 mai : correction de certaines erreurs
 
-11 mai : petites modifications + corrections des méthodes 
-nouvellesPiece et setOrientations ont été modifiés ajd
+11 mai : petites modifications 
 
-12 mai : finalisation de l'étape
 
 ## Etape 3 
 
@@ -31,3 +29,9 @@ Début du code le 6 mai
 17 mai : changement intégral de la méthode calculeChemin().
 
 18-19 mai : finalisation de l'étape 3
+
+19-20 mai : finition de calculeChemin() avec les membres du groupe.
+
+## Etape 4
+
+22 mai : commencement de l'étape 4
