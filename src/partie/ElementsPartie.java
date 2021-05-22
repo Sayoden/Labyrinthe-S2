@@ -6,13 +6,7 @@ import composants.Plateau;
 import composants.Utils;
 import joueurs.Joueur;
 
-/**
- *
- * Cette classe permet de reprÃ©senter un ensemble d'Ã©lements composant une partie de jeu.
- *
- */
 public class ElementsPartie {
-
     private Joueur[] joueurs; 	// Les joueurs de la partie.
     private Objet[] objets; 	// Les 18 objets de la partie dans l'ordre de leurs numÃ©ros.
     private Plateau plateau; 	// Le plateau des piÃ¨ces.
@@ -137,7 +131,7 @@ public class ElementsPartie {
      *
      * @return Une copie des Ã©lÃ©ments.
      */
-    public ElementsPartie copy() throws CloneNotSupportedException {
+    public ElementsPartie copy(){
         Objet[] nouveauxObjets=new Objet[(this.objets).length];
         for (int i=0;i<objets.length;i++)
             nouveauxObjets[i]=(this.objets[i]).copy();
