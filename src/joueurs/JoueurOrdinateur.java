@@ -1,8 +1,6 @@
 package joueurs;
-
 import grafix.interfaceGraphique.IG;
 import partie.ElementsPartie;
-
 
 /**
  *
@@ -11,9 +9,7 @@ import partie.ElementsPartie;
  * @author Jean-FranÃ§ois Condotta - 2021
  *
  */
-
-public abstract class JoueurOrdinateur extends Joueur {
-
+public class JoueurOrdinateur extends Joueur{
     /**
      * Constructeur permettant de crÃ©er un joueur.
      *
@@ -55,9 +51,6 @@ public abstract class JoueurOrdinateur extends Joueur {
         resultat[1]=this.getPosColonne();
         return resultat;
     }
-
-
-
 
 
 }
