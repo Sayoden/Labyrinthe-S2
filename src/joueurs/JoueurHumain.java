@@ -4,15 +4,7 @@ import composants.Objet;
 import grafix.interfaceGraphique.IG;
 import partie.ElementsPartie;
 
-/**
- *
- * Cette classe permet de reprÃ©senter un joueur humain.
- *
- * @author Jean-FranÃ§ois Condotta - 2021
- *
- */
-public class JoueurHumain extends Joueur {
-
+public class JoueurHumain extends Joueur{
     /**
      * Constructeur permettant de crÃ©er un joueur Ã  partir de son nom, son type et
      * le numÃ©ro de l'image le reprÃ©sentant.
@@ -62,7 +54,5 @@ public class JoueurHumain extends Joueur {
             nouveauJoueur.recupererObjet();
         return nouveauJoueur;
     }
-
-
 
 }
