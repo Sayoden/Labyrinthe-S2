@@ -131,7 +131,7 @@ public class ElementsPartie {
      *
      * @return Une copie des Ã©lÃ©ments.
      */
-    public ElementsPartie copy() throws CloneNotSupportedException {
+    public ElementsPartie copy(){
         Objet[] nouveauxObjets=new Objet[(this.objets).length];
         for (int i=0;i<objets.length;i++)
             nouveauxObjets[i]=(this.objets[i]).copy();
