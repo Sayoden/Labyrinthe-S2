@@ -1,11 +1,9 @@
 package joueurs;
-
 import composants.Objet;
 import composants.Piece;
 import composants.Plateau;
 import composants.Utils;
 import partie.ElementsPartie;
-
 /**
  *
  * Cette classe permet de reprÃ©senter un joueur ordinateur de type T2.
@@ -13,9 +11,7 @@ import partie.ElementsPartie;
  * @author Jean-FranÃ§ois Condotta - 2021
  *
  */
-
-public class JoueurOrdinateurT2 extends JoueurOrdinateur {
-
+public class JoueurOrdinateurT2 extends JoueurOrdinateur{
     /**
      * Constructeur permettant de crÃ©er un joueur.
      *
@@ -44,5 +40,4 @@ public class JoueurOrdinateurT2 extends JoueurOrdinateur {
             nouveauJoueur.recupererObjet();
         return nouveauJoueur;
     }
-
 }
