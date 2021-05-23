@@ -22,55 +22,36 @@ public class TestPlateau {
         IG.pause(300);
         IG.jouerUnSon(2);
 
+        String[] message = {
+                "",
+                "Cliquez pour continuer ...",
+                ""
+        };
 
-        int nbObjetsJoueur = 9;
-        if (nbJoueurs == 3) {
-            nbObjetsJoueur = 6;
-        }
-        /**
-         * Setup player name, type with parameters
-         */
-        int counter = 1;
-        int countObjet = 0;
-        for (int i = 0; i < nbJoueurs; i++) {
-            String nomJoueur = (String) parametres[counter];
-            counter++;
-            String categorieJoueur = (String) parametres[counter];
-            counter++;
-            int numImageJoueur = ((Integer) parametres[counter]).intValue();
-            counter++;
+        IG.afficherMessage(message);
+        IG.miseAJourAffichage();
+        IG.attendreClic();
 
-            //Setup player objects
-            for (int j = 0; j < nbObjetsJoueur; j++) {
-                IG.changerObjetJoueur(i, countObjet, j);
-                countObjet++;
-            }
-
-            IG.changerNomJoueur(i, nomJoueur + " (" + categorieJoueur + ")");
-            IG.changerImageJoueur(i, numImageJoueur);
-        }
-        /**
-         * Setup player name, type with parameters
-         */
-
-        Plateau plateau=new Plateau();
-        Piece pieceHorsPlateau=plateau.placerPiecesAleatoierment();
+        Plateau plateau = new Plateau();
+        Piece pieceHorsPlateau = plateau.placerPiecesAleatoierment();
 
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 7; j++) {
-                IG.changerPiecePlateau(i,j, plateau.getPiece(i,j).getModelePiece(), plateau.getPiece(i,j).getOrientationPiece());
+                IG.changerPiecePlateau(i, j, plateau.getPiece(i, j).getModelePiece(), plateau.getPiece(i, j).getOrientationPiece());
             }
         }
         IG.miseAJourAffichage();
-        int[][] resultat = plateau.calculeChemin(0,0, 1,0);
+        int[][] resultat = plateau.calculeChemin(3, 3, 3, 6);
         if (resultat == null) {
             System.out.println("Aucun chemin possible.");
         } else {
-            System.out.println(Arrays.deepToString(resultat));
+            System.out.println("La liste des chemins trouvés à partir de la case (3,3) : \n");
             for (int[] ints : resultat) {
+                System.out.println("Chemins entre les cases (3,3) et (" + ints[0] + "," + ints[1] + ") : " + Arrays.deepToString(resultat));
                 IG.placerBilleSurPlateau(ints[0], ints[1], 1, 1, 1);
             }
         }
+
         IG.miseAJourAffichage();
     }
 }
