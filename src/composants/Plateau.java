@@ -1,5 +1,10 @@
 package composants;
 
+import grafix.interfaceGraphique.IG;
+
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Cette classe permet de gÃ©rer un plateau de jeu constituÃ© d'une grille de piÃ¨ces (grille de 7 lignes sur 7 colonnes).
  */
@@ -96,25 +101,31 @@ public class Plateau {
      * @return true si les positions passÃ©es en paramÃ¨tre sont les positions de deux cases diffÃ©rentes et adjacentes de la grille de jeu et qu'il est possible de passer d'une cas Ã  l'autre compte tenu des deux piÃ¨ces posÃ©es sur les deux cases du plateau, false sinon.
      */
     private boolean passageEntreCases(int posLigCase1, int posColCase1, int posLigCase2, int posColCase2) {
-
-        if ((posLigCase1 != posLigCase2) && (posColCase1 != posColCase2)
+        if ((posLigCase1 == posLigCase2 ^ posColCase1 == posColCase2)
                 && casesAdjacentes(posLigCase1, posColCase1, posLigCase2, posColCase2)) {
 
             Piece piece1 = getPiece(posLigCase1, posColCase1);
             Piece piece2 = getPiece(posLigCase2, posColCase2);
 
-            if (piece1.getPointEntree(0) && piece2.getPointEntree(2)) return true;
-            if (piece1.getPointEntree(1) && piece2.getPointEntree(3)) return true;
-            if (piece1.getPointEntree(2) && piece2.getPointEntree(0)) return true;
-            if (piece1.getPointEntree(3) && piece2.getPointEntree(1)) return true;
-
+            if (posLigCase1 == posLigCase2) {
+                if (posColCase1 < posColCase2) {
+                    return piece1.getPointEntree(1) && piece2.getPointEntree(3);
+                } else {
+                    return piece1.getPointEntree(3) && piece2.getPointEntree(1);
+                }
+            } else {
+                if (posLigCase1 < posLigCase2) {
+                    return piece1.getPointEntree(2) && piece2.getPointEntree(0);
+                } else {
+                    return piece1.getPointEntree(0) && piece2.getPointEntree(2);
+                }
+            }
         }
-
         return false;
     }
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (07/05/2021 LG,CD,LI Finalisée)
      * <p>
      * MÃ©thode permettant de retourner un Ã©ventuel chemin entre deux cases du plateau compte tenu des piÃ¨ces posÃ©es sur le plateau.
      * Dans le cas oÃ¹ il n'y a pas de chemin entre les deux cases, la valeur null est retournÃ©e.
@@ -131,11 +142,121 @@ public class Plateau {
      * @return null si il n'existe pas de chemin entre les deux case, un chemin sinon.
      */
     public int[][] calculeChemin(int posLigCaseDep, int posColCaseDep, int posLigCaseArr, int posColCaseArr) {
-        int resultat[][] = null;
+        List<int[]> listExecution = new ArrayList<>();
+        List<int[]> exclusion = new ArrayList<>();
+        HashMap<List<Integer>, int[][]> cheminsMap = new HashMap<>();
 
-        // A ComplÃ©ter
+        listExecution.add(new int[]{posLigCaseDep, posColCaseDep});
+        boolean cheminPossible = true;
 
-        return resultat;
+        outer:
+        while (cheminPossible) {
+            for (int[] ints : new ArrayList<>(listExecution)) {
+                exclusion.add(new int[]{ints[0], ints[1]});
+                ArrayList<int[]> possibilites = possibiliteCasesAdjacentes(ints[0], ints[1], exclusion);
+                possibilites.forEach(possible -> {
+                    if (exclusion.stream().noneMatch(x -> x[0] == possible[0] && x[1] == possible[1])) {
+                        exclusion.add(possible);
+                    }
+                });
+                listExecution.addAll(possibilites);
+                listExecution.removeIf(remove -> remove[0] == ints[0] && remove[1] == ints[1]);
+
+                if (cheminsMap.size() == 0) {
+                    cheminsMap.put(Arrays.asList(ints[0], ints[1]), new int[][]{new int[]{ints[0], ints[1]}});
+                } else {
+                    ArrayList<int[]> cheminsAvant = possibiliteCasesAdjacentes(ints[0], ints[1], null);
+                    ArrayList<int[][]> cheminsTemp = new ArrayList<>();
+                    cheminsAvant.forEach(chemin -> {
+                        if (cheminsMap.containsKey(Arrays.asList(chemin[0], chemin[1]))) {
+                            cheminsTemp.add(new int[][]{chemin});
+                            int[][] test = cheminsMap.get(Arrays.asList(cheminsTemp.get(0)[0][0], cheminsTemp.get(0)[0][1]));
+                            int[][] test2 = new int[test.length + 1][2];
+                            for (int i = 0; i < test2.length; i++) {
+                                if (i >= test.length) {
+                                    test2[i][0] = ints[0];
+                                    test2[i][1] = ints[1];
+                                } else {
+                                    test2[i][0] = test[i][0];
+                                    test2[i][1] = test[i][1];
+                                }
+                            }
+                            cheminsMap.put(Arrays.asList(ints[0], ints[1]), test2);
+                        }
+                    });
+                    if (ints[0] == posLigCaseArr && ints[1] == posColCaseArr) {
+                        int[][] cheminFinal = new int[0][];
+                        for (Map.Entry<List<Integer>, int[][]> entry : cheminsMap.entrySet()) {
+                            if (entry.getValue()[entry.getValue().length - 1][0] == posLigCaseArr && entry.getValue()[entry.getValue().length - 1][1] == posColCaseArr) {
+                                if (cheminFinal.length <= entry.getValue().length) {
+                                    cheminFinal = entry.getValue();
+                                }
+                            }
+                        }
+                        return cheminFinal;
+                    }
+                }
+            }
+            if (listExecution.size() == 0) {
+                cheminPossible = false;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * A Faire (14/05/2021 LG En cours)
+     * <p>
+     * Méthode permettant de retourner les différents chemins possibles sous forme de tableau de coordonnées vers les cases
+     * adjacentes en fonction de la piece donnée en argument.
+     *
+     * @param posLigCase La ligne de la case (un entier compris entre 0 et 6).
+     * @param posColCase La colonne de la case (un entier compris entre 0 et 6).
+     * @return le tableau des coordonnées des possibilités de déplacement vers les cases adjacentes
+     */
+    public ArrayList<int[]> possibiliteCasesAdjacentes(int posLigCase, int posColCase, List<int[]> exclude) {
+        ArrayList<int[]> possibilites = new ArrayList<>();
+
+        int[] posNow;
+        List<int[]> passage = new ArrayList<>();
+        for (int i = 0; i <= 3; i++) {
+            switch (i) {
+                case 0 -> {
+                    posNow = new int[]{posLigCase - 1, posColCase};
+                    if (passageEntreCases(posLigCase, posColCase, posNow[0], posNow[1])) {
+                        passage.add(posNow);
+                    }
+                }
+                case 1 -> {
+                    posNow = new int[]{posLigCase, posColCase + 1};
+                    if (passageEntreCases(posLigCase, posColCase, posNow[0], posNow[1])) {
+                        passage.add(posNow);
+                    }
+                }
+                case 2 -> {
+                    posNow = new int[]{posLigCase + 1, posColCase};
+                    if (passageEntreCases(posLigCase, posColCase, posNow[0], posNow[1])) {
+                        passage.add(posNow);
+                    }
+                }
+                case 3 -> {
+                    posNow = new int[]{posLigCase, posColCase - 1};
+                    if (passageEntreCases(posLigCase, posColCase, posNow[0], posNow[1])) {
+                        passage.add(posNow);
+                    }
+                }
+            }
+        }
+        for (int[] ints : passage) {
+            if (exclude == null || exclude.size() == 0) {
+                possibilites.add(ints);
+            } else {
+                if (exclude.stream().noneMatch(x -> x[0] == ints[0] && x[1] == ints[1])) {
+                    possibilites.add(ints);
+                }
+            }
+        }
+        return possibilites;
     }
 
 

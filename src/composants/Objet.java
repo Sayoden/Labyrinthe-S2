@@ -20,6 +20,8 @@ public class Objet {
      * @param numObjet Le numÃ©ro de l'objet.
      */
     public Objet(int numObjet) {
+        assert numObjet >= 0 && numObjet <= 17;
+
         this.numObjet = numObjet;
         this.surPlateau = false;
         this.posLignePlateau = -1;
@@ -67,7 +69,7 @@ public class Objet {
      * @return Le numÃ©ro de la ligne sur laquelle se trouve l'objet.
      */
     public int getPosLignePlateau() {
-        return this.posLignePlateau; // A Modifier
+        return this.posLignePlateau;
     }
 
     /**
@@ -78,7 +80,7 @@ public class Objet {
      * @return Le numÃ©ro de la colonne sur laquelle se trouve l'objet.
      */
     public int getPosColonnePlateau() {
-        return this.posColonnePlateau; // A Modifier
+        return this.posColonnePlateau;
     }
 
 
