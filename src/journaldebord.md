@@ -35,3 +35,5 @@ Début du code le 6 mai
 ## Etape 4
 
 22 mai : commencement de l'étape 4
+
+25 mai : finalisation de l'étape 4
