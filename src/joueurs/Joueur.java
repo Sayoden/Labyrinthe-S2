@@ -9,7 +9,7 @@ import partie.ElementsPartie;
  *
  */
 
-public class Joueur {
+public abstract class Joueur {
     private int numJoueur; // le numÃ©ro du jouer
     private String nomJoueur; // Le nom du joueur
     private int numeroImagePersonnage; // Le numÃ©ro de l'image reprÃ©sentant le joueur
@@ -19,7 +19,7 @@ public class Joueur {
     private int posColonne; // La colonne correspondant Ã  la position du joueur sur le plateau
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (25/05 LI Statut)
      *
      * Constructeur permettant de crÃ©er un joueur Ã  partir de son nom, son type et
      * le numÃ©ro de l'image le reprÃ©sentant. La position du joueur sur le plateau doit Ãªtre
@@ -32,7 +32,12 @@ public class Joueur {
      * @param posColonnePlateau La colonne du plateau sur laquelle est positionnÃ©s le joueur.
      */
     public Joueur(int numJoueur,String nomJoueur, int numeroImagePersonnage,int posLignePlateau,int posColonnePlateau) {
-        // A ComplÃ©ter
+        this.nomJoueur=nomJoueur;
+        this.numJoueur=numJoueur;
+        this.numeroImagePersonnage=numeroImagePersonnage;
+        this.posColonne=posColonnePlateau;
+        this.posLigne=posLignePlateau;
+        this.objetsJoueur=null;
     }
 
     /**
@@ -77,57 +82,57 @@ public class Joueur {
 
     /**
      *
-     * A Faire (Quand Qui Statut)
+     * A Faire (25/05 LI Finalisée)
      *
      * MÃ©thode retournant le nombre d'objets rÃ©cupÃ©rÃ©s par le joueur.
      *
      * @return Le nombre d'objets rÃ©cupÃ©rÃ©s par le joueur.
      */
     public int getNombreObjetsRecuperes() {
-        return -1; // A Modifier
+        return nombreObjetsRecuperes; // A Modifier
     }
 
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (25/05 LI Finalisée)
      *
      * MÃ©thode retournant la ligne du plateau sur laquelle se trouve le joueur.
      * @return  La ligne du plateau sur laquelle se trouve le joueur.
      */
     public int getPosLigne() {
-        return -1; // A Modifier
+        return posLigne; // A Modifier
     }
 
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (25/05 LI Finalisée)
      *
      * MÃ©thode retournant la colonne du plateau sur laquelle se trouve le joueur.
      * @return La colonne du plateau sur laquelle se trouve le joueur.
      */
     public int getPosColonne() {
-        return -1; // A Modifier
+        return posColonne; // A Modifier
     }
 
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (25/05 LI Finalisée)
      *
      * MÃ©thode retournant le nom du joueur.
      * @return Le nom du joueur.
      */
     public String getNomJoueur() {
-        return null; // A Modifier
+        return this.nomJoueur; // A Modifier
     }
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (25/05 LI Finalisée)
      *
      * MÃ©thode retournant le numÃ©ro de l'image reprÃ©sentant le joueur.
      * @return Le numÃ©ro de l'image reprÃ©sentant le joueur.
      */
     public int getNumeroImagePersonnage() {
-        return -1; // A Modifier
+        return this.numeroImagePersonnage; // A Modifier
     }
 
     /**
@@ -139,6 +144,7 @@ public class Joueur {
      * @param objetsARecuperer Un tableau contenant les objets Ã  rÃ©cupÃ©rer dans l'ordre.
      */
     public void setObjetsJoueur(Objet objetsARecuperer[]){
+
         // A ComplÃ©ter
     }
 
@@ -160,7 +166,7 @@ public class Joueur {
 
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (25/05 LI Statut)
      *
      * MÃ©thode retournant le prochain objet Ã  rÃ©cupÃ©rer par le joueur.
      * Avant d'appeler cette mÃ©thode il est nÃ©cessaire de s'assurer qu'il existe encore des objets Ã  rÃ©cupÃ©rer.
@@ -168,7 +174,7 @@ public class Joueur {
      * @return Le prochain objet Ã  rÃ©cupÃ©rer par le joueur.
      */
     public Objet getProchainObjet(){
-        return null; // A Modifier
+        return getProchainObjet(); // A Modifier
     }
 
     /**
@@ -183,14 +189,14 @@ public class Joueur {
 
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (25/05 LI Finalisée)
      *
      * MÃ©thode retournant le numÃ©ro du joueur.
      *
      * @return Le numÃ©ro du joueur.
      */
     public int getNumJoueur(){
-        return -1; // A Modifier
+        return numJoueur; // A Modifier
     }
 
     /**
