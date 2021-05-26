@@ -74,6 +74,7 @@ abstract public class Piece {
      *
      * @param orientationPiece Un entier correspondant Ã  la nouvelle orientation de la piÃ¨ce.
      */
+
     public void setOrientation(int orientationPiece) {
         while (orientationPiece != this.orientationPiece) {
             rotation();
