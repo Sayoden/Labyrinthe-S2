@@ -89,7 +89,7 @@ public abstract class Joueur {
      * @return Le nombre d'objets rÃ©cupÃ©rÃ©s par le joueur.
      */
     public int getNombreObjetsRecuperes() {
-        return nombreObjetsRecuperes; // A Modifier
+        return this.nombreObjetsRecuperes;
     }
 
 
@@ -100,7 +100,7 @@ public abstract class Joueur {
      * @return  La ligne du plateau sur laquelle se trouve le joueur.
      */
     public int getPosLigne() {
-        return posLigne; // A Modifier
+        return this.posLigne;
     }
 
 
@@ -111,7 +111,7 @@ public abstract class Joueur {
      * @return La colonne du plateau sur laquelle se trouve le joueur.
      */
     public int getPosColonne() {
-        return posColonne; // A Modifier
+        return this.posColonne;
     }
 
 
@@ -122,7 +122,7 @@ public abstract class Joueur {
      * @return Le nom du joueur.
      */
     public String getNomJoueur() {
-        return this.nomJoueur; // A Modifier
+        return this.nomJoueur;
     }
 
     /**
@@ -132,11 +132,11 @@ public abstract class Joueur {
      * @return Le numÃ©ro de l'image reprÃ©sentant le joueur.
      */
     public int getNumeroImagePersonnage() {
-        return this.numeroImagePersonnage; // A Modifier
+        return this.numeroImagePersonnage;
     }
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (26/05 LG Finalisée)
      *
      * MÃ©thode permettant d'affecter au joueur les objets qu'il devra rÃ©cupÃ©rer durant le jeu.
      * Attention : cette mÃ©thode devra crÃ©er un nouveau tableau pour l'attribut this.objetsARecuperer.
@@ -144,12 +144,14 @@ public abstract class Joueur {
      * @param objetsARecuperer Un tableau contenant les objets Ã  rÃ©cupÃ©rer dans l'ordre.
      */
     public void setObjetsJoueur(Objet objetsARecuperer[]){
-
-        // A ComplÃ©ter
+        this.objetsJoueur = new Objet[objetsARecuperer.length];
+        for (int i = 0; i < objetsARecuperer.length; i++) {
+            this.objetsJoueur[i] = objetsARecuperer[i];
+        }
     }
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (26/05 LG Finalisée)
      *
      * MÃ©thode retournant un nouveau tableau contenant les objets attribuÃ©s au joueur. Des objets Ã  rÃ©cupÃ©rer devront Ãªtre
      * affectÃ©s au joueur avant tout appel de cette mÃ©thode (on suppose donc que l'attribut objetsJoueur est non null).
@@ -157,16 +159,17 @@ public abstract class Joueur {
      * @return Un tableau d'Objet correspondant aux objets Ã  rÃ©cupÃ©rer du joueur.
      */
     public Objet[] getObjetsJoueur(){
-        Objet resultat[]=null;
-
-        // A ComplÃ©ter
+        Objet resultat[]=new Objet[this.objetsJoueur.length];
+        for (int i=0;i<this.objetsJoueur.length;i++){
+            resultat[i]=this.objetsJoueur[i];
+        }
 
         return resultat;
     }
 
 
     /**
-     * A Faire (25/05 LI Statut)
+     * A Faire (25/05 LG Finalisée)
      *
      * MÃ©thode retournant le prochain objet Ã  rÃ©cupÃ©rer par le joueur.
      * Avant d'appeler cette mÃ©thode il est nÃ©cessaire de s'assurer qu'il existe encore des objets Ã  rÃ©cupÃ©rer.
@@ -174,17 +177,20 @@ public abstract class Joueur {
      * @return Le prochain objet Ã  rÃ©cupÃ©rer par le joueur.
      */
     public Objet getProchainObjet(){
-        return getProchainObjet(); // A Modifier
+        if (this.nombreObjetsRecuperes < this.objetsJoueur.length) {
+            return this.objetsJoueur[this.nombreObjetsRecuperes];
+        }
+        return null;
     }
 
     /**
      *
-     * A Faire (Quand Qui Statut)
+     * A Faire (26/05 LI LG Finalisée)
      *
      * MÃ©thode permettant de rÃ©cupÃ©rer un nouvel objet. Cette mÃ©thode incrÃ©mente simplement de 1 le nombre d'objets qui ont Ã©tÃ© rÃ©cupÃ©rÃ©s.
      */
     public void recupererObjet(){
-        // A ComplÃ©ter
+        this.nombreObjetsRecuperes++;
     }
 
 
@@ -196,19 +202,22 @@ public abstract class Joueur {
      * @return Le numÃ©ro du joueur.
      */
     public int getNumJoueur(){
-        return numJoueur; // A Modifier
+        return this.numJoueur;
     }
 
     /**
      *
-     * A Faire (Quand Qui Statut)
+     * A Faire (26/05 LG Finalisée)
      *
      * MÃ©thode permettant le changement de position du joueur.
      * @param posLigne La ligne de la nouvelle position.
      * @param posColonne La colonne de la nouvelle position.
      */
     public void setPosition(int posLigne,int posColonne) {
-        // A ComplÃ©ter
+        if ((posLigne >= 0 && posLigne <= 6) && (posColonne >= 0 && posColonne <= 6)) {
+            this.posLigne = posLigne;
+            this.posColonne = posColonne;
+        }
     }
 
     /**
@@ -242,6 +251,7 @@ public abstract class Joueur {
      * @param elementsPartie Les Ã©lÃ©ments de la partie.
      * @return Un tableau contenant deux entiers, le premier correspond Ã  la ligne de la case choisie, le second Ã  la colonne de la case choisie.
      */
+
     abstract public int[] choisirCaseArrivee(ElementsPartie elementsPartie);
 
 
