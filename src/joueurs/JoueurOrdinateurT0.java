@@ -31,6 +31,16 @@ public class JoueurOrdinateurT0 extends Joueur{
         return "OrdiType0";
     }
 
+    @Override
+    public int[] choisirOrientationEntree(ElementsPartie elementsPartie) {
+        return new int[0];
+    }
+
+    @Override
+    public int[] choisirCaseArrivee(ElementsPartie elementsPartie) {
+        return new int[0];
+    }
+
 
     @Override
     public Joueur copy(Objet objets[]){
