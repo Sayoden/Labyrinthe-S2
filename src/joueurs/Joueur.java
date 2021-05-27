@@ -19,7 +19,7 @@ public abstract class Joueur {
     private int posColonne; // La colonne correspondant Ã  la position du joueur sur le plateau
 
     /**
-     * A Faire (25/05 LI Statut)
+     * A Faire (25/05 LI Finalisée)
      *
      * Constructeur permettant de crÃ©er un joueur Ã  partir de son nom, son type et
      * le numÃ©ro de l'image le reprÃ©sentant. La position du joueur sur le plateau doit Ãªtre
