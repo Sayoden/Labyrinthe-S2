@@ -40,3 +40,7 @@ Début du code le 6 mai
 
 26 mai : modification étape 4 des méthodes ainsi que de l'ajout de TestJoueur
 
+27 mai : finition de l'étape 4
+
+## Etape 5 
+
