@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="libIG20">
+  <library name="libIG24">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Documents/libIG20.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../libs/libIG24.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

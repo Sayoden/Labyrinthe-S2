@@ -141,6 +141,9 @@ public class Plateau {
      * @return null si il n'existe pas de chemin entre les deux case, un chemin sinon.
      */
     public int[][] calculeChemin(int posLigCaseDep, int posColCaseDep, int posLigCaseArr, int posColCaseArr) {
+        if (posLigCaseDep == posLigCaseArr && posColCaseDep == posColCaseArr) {
+            return new int[][]{new int[]{posLigCaseArr, posColCaseArr}};
+        }
         List<int[]> listExecution = new ArrayList<>();
         List<int[]> exclusion = new ArrayList<>();
         HashMap<List<Integer>, int[][]> cheminsMap = new HashMap<>();
