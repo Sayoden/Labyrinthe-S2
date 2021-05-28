@@ -101,8 +101,7 @@ public class Plateau {
      * @return true si les positions passÃ©es en paramÃ¨tre sont les positions de deux cases diffÃ©rentes et adjacentes de la grille de jeu et qu'il est possible de passer d'une cas Ã  l'autre compte tenu des deux piÃ¨ces posÃ©es sur les deux cases du plateau, false sinon.
      */
     private boolean passageEntreCases(int posLigCase1, int posColCase1, int posLigCase2, int posColCase2) {
-        if ((posLigCase1 == posLigCase2 ^ posColCase1 == posColCase2)
-                && casesAdjacentes(posLigCase1, posColCase1, posLigCase2, posColCase2)) {
+        if (casesAdjacentes(posLigCase1, posColCase1, posLigCase2, posColCase2)) {
 
             Piece piece1 = getPiece(posLigCase1, posColCase1);
             Piece piece2 = getPiece(posLigCase2, posColCase2);
@@ -142,6 +141,9 @@ public class Plateau {
      * @return null si il n'existe pas de chemin entre les deux case, un chemin sinon.
      */
     public int[][] calculeChemin(int posLigCaseDep, int posColCaseDep, int posLigCaseArr, int posColCaseArr) {
+        if (posLigCaseDep == posLigCaseArr && posColCaseDep == posColCaseArr) {
+            return new int[][]{new int[]{posLigCaseArr, posColCaseArr}};
+        }
         List<int[]> listExecution = new ArrayList<>();
         List<int[]> exclusion = new ArrayList<>();
         HashMap<List<Integer>, int[][]> cheminsMap = new HashMap<>();
@@ -149,7 +151,6 @@ public class Plateau {
         listExecution.add(new int[]{posLigCaseDep, posColCaseDep});
         boolean cheminPossible = true;
 
-        outer:
         while (cheminPossible) {
             for (int[] ints : new ArrayList<>(listExecution)) {
                 exclusion.add(new int[]{ints[0], ints[1]});
