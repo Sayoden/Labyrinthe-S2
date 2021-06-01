@@ -160,26 +160,30 @@ public class ElementsPartie {
         boolean hautBas;
         int ligne;
         int colonne;
+        int[] tableau = new int[]{6,4,2,0,-2,-4,-6};
         if (choixEntree >= 0 && choixEntree <= 6) {
             //Haut vers le bas
             ligne = 0;
             colonne = choixEntree;
             hautBas = true;
-        } else if (choixEntree >= 14 && choixEntree <= 20) {
-            //Bas vers le haut
-            ligne = 6;
-            colonne = choixEntree % (-7);
-            hautBas = true;
-        } else if (choixEntree >= 7 && choixEntree <= 13) {
-            //Droite vers la gauche
-            colonne = 6;
-            ligne = choixEntree % 7;
-            hautBas = false;
         } else {
-            //Gauche vers la droite
-            colonne = 0;
-            ligne = choixEntree % (-7);
-            hautBas = false;
+            int ligne1 = (choixEntree % 7) + tableau[choixEntree % 7];
+            if (choixEntree >= 14 && choixEntree <= 20) {
+                //Bas vers le haut
+                ligne = 6;
+                colonne = ligne1;
+                hautBas = true;
+            } else if (choixEntree >= 7 && choixEntree <= 13) {
+                //Droite vers la gauche
+                colonne = 6;
+                ligne = choixEntree % 7;
+                hautBas = false;
+            } else {
+                //Gauche vers la droite
+                colonne = 0;
+                ligne = ligne1;
+                hautBas = false;
+            }
         }
 
         Piece oldPiece = this.pieceLibre;
@@ -196,7 +200,6 @@ public class ElementsPartie {
             }
             IG.changerPieceHorsPlateau(oldPiece.getModelePiece(), oldPiece.getOrientationPiece());
             this.pieceLibre = oldPiece;
-            IG.pause(1000);
             IG.miseAJourAffichage();
         }
     }
