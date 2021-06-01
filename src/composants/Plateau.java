@@ -61,8 +61,13 @@ public class Plateau {
         int[] randomTab = Utils.genereTabIntAleatoirement(49);
 
         for (int i = 0; i < randomTab.length; i++) {
-            this.plateau[i / 7][i % 7] = pieces[i];
+            int ligne = i / 7;
+            int colonne = i % 7;
+            this.plateau[ligne][colonne] = pieces[i];
+            IG.changerPiecePlateau(ligne, colonne, pieces[i].getModelePiece(), pieces[i].getOrientationPiece());
         }
+        IG.changerPieceHorsPlateau(pieces[49].getModelePiece(), pieces[49].getOrientationPiece());
+        IG.miseAJourAffichage();
 
         return pieces[49];
     }

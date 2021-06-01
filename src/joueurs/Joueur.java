@@ -2,6 +2,7 @@ package joueurs;
 
 import composants.Objet;
 import composants.Utils;
+import grafix.interfaceGraphique.IG;
 import partie.ElementsPartie;
 
 /**
@@ -148,7 +149,9 @@ public abstract class Joueur {
         this.objetsJoueur = new Objet[objetsARecuperer.length];
         for (int i = 0; i < objetsARecuperer.length; i++) {
             this.objetsJoueur[i] = objetsARecuperer[i];
+            IG.changerObjetJoueur(this.getNumJoueur(), objetsARecuperer[i].getNumeroObjet(), i);
         }
+        IG.miseAJourAffichage();
     }
 
     /**

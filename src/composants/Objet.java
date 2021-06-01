@@ -1,6 +1,12 @@
 package composants;
 
+import grafix.interfaceGraphique.IG;
+
 import javax.swing.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Cette classe permet de reprÃ©senter chacun des objets du jeu.
@@ -44,8 +50,11 @@ public class Objet {
             objets[i] = new Objet(i);
             objets[i].positionneObjet(randomTab[i] / 7, randomTab[i] % 7);
         }
+        IG.miseAJourAffichage();
 
-        return objets;
+        List<Objet> objetList = Arrays.asList(objets);
+        Collections.shuffle(objetList);
+        return objetList.toArray(objets);
     }
 
 
@@ -96,6 +105,7 @@ public class Objet {
         this.surPlateau = true;
         this.posColonnePlateau = colonnePlateau;
         this.posLignePlateau = lignePlateau;
+        IG.placerObjetPlateau(this.numObjet, lignePlateau, colonnePlateau);
     }
 
     /**

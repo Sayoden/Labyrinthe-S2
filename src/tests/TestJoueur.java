@@ -96,4 +96,3 @@ public class TestJoueur {
         IG.miseAJourAffichage();
     }
 }
-
