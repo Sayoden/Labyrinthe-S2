@@ -8,6 +8,7 @@ import grafix.interfaceGraphique.IG;
 import joueurs.Joueur;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Cette classe permet de reprÃ©senter un ensemble d'Ã©lements composant une partie de jeu.
@@ -39,18 +40,7 @@ public class ElementsPartie {
         this.objets = Objet.nouveauxObjets();
         this.plateau = plateau;
         this.pieceLibre = plateau.placerPiecesAleatoierment();
-
         attribuerObjetsAuxJoueurs();
-        IG.placerJoueurSurPlateau(0, 0, 0);
-        IG.placerJoueurSurPlateau(1, 0, 6);
-        if (this.nombreJoueurs == 3) {
-            IG.placerJoueurSurPlateau(2, 6, 6);
-        }
-        for (Joueur joueur : this.joueurs) {
-            IG.changerImageJoueur(joueur.getNumJoueur(), joueur.getNumeroImagePersonnage());
-            IG.changerNomJoueur(joueur.getNumJoueur(), joueur.getNomJoueur() + " (" + joueur.getCategorie() + ")");
-        }
-        IG.miseAJourAffichage();
     }
 
     /**
@@ -80,7 +70,6 @@ public class ElementsPartie {
             int i = 0;
             Objet[] objets = new Objet[(this.objets.length / this.nombreJoueurs)];
             while (i != (this.objets.length / this.nombreJoueurs)) {
-                System.out.println("Joueurs " + joueur.getNumJoueur() + " :" + this.objets[i + x].getNumeroObjet());
                 objets[i] = this.objets[i + x];
                 i++;
             }
@@ -190,7 +179,6 @@ public class ElementsPartie {
         for (int i = 0; i <= 6; i++) {
             if (hautBas) {
                 int newLigne = (ligne == 0 ? ligne + i : ligne - i);
-                System.out.println(newLigne + " et " + colonne);
                 IG.changerPiecePlateau(newLigne, colonne, oldPiece.getModelePiece(), oldPiece.getOrientationPiece());
                 oldPiece = this.plateau.getPiece(newLigne, colonne);
             } else {
@@ -200,8 +188,8 @@ public class ElementsPartie {
             }
             IG.changerPieceHorsPlateau(oldPiece.getModelePiece(), oldPiece.getOrientationPiece());
             this.pieceLibre = oldPiece;
-            IG.miseAJourAffichage();
         }
+        IG.miseAJourAffichage();
     }
 
     /**
@@ -222,5 +210,14 @@ public class ElementsPartie {
         return nouveauxElements;
     }
 
-
+    @Override
+    public String toString() {
+        return "ElementsPartie{" +
+                "joueurs=" + Arrays.toString(joueurs) +
+                ", objets=" + Arrays.toString(objets) +
+                ", plateau=" + plateau +
+                ", pieceLibre=" + pieceLibre +
+                ", nombreJoueurs=" + nombreJoueurs +
+                '}';
+    }
 }

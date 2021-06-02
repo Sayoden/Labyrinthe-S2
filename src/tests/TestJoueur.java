@@ -55,21 +55,14 @@ public class TestJoueur {
          * Setup player name, type with parameters
          */
 
-        Plateau plateau = new Plateau();
         Joueur joueurs[]=Joueur.nouveauxJoueurs(parametres);
-        Piece pieceHorsPlateau = plateau.placerPiecesAleatoierment();
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
-                IG.changerPiecePlateau(i, j, plateau.getPiece(i, j).getModelePiece(), plateau.getPiece(i, j).getOrientationPiece());
-            }
-        }
-        IG.changerPieceHorsPlateau(pieceHorsPlateau.getModelePiece(), pieceHorsPlateau.getOrientationPiece());
 
         IG.afficherMessage(message);
         IG.miseAJourAffichage();
         IG.attendreClic();
 
         ElementsPartie elementsPartie = new ElementsPartie(joueurs);
+        Plateau plateau = elementsPartie.getPlateau();
         for (Joueur joueur : joueurs) {
             String[] message1 = {
                     "",
@@ -85,7 +78,7 @@ public class TestJoueur {
                 if (chemin != null) {
                     for (int[] ints : chemin) {
                         IG.miseAJourAffichage();
-                        IG.pause(200);
+                        IG.pause(500);
                         IG.placerBilleSurPlateau(ints[0], ints[1], 1, 1, joueur.getNumJoueur());
                         IG.placerJoueurSurPlateau(joueur.getNumJoueur(), ints[0], ints[1]);
                     }

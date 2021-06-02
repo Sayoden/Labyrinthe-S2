@@ -64,10 +64,7 @@ public class Plateau {
             int ligne = i / 7;
             int colonne = i % 7;
             this.plateau[ligne][colonne] = pieces[i];
-            IG.changerPiecePlateau(ligne, colonne, pieces[i].getModelePiece(), pieces[i].getOrientationPiece());
         }
-        IG.changerPieceHorsPlateau(pieces[49].getModelePiece(), pieces[49].getOrientationPiece());
-        IG.miseAJourAffichage();
 
         return pieces[49];
     }
@@ -94,7 +91,7 @@ public class Plateau {
     }
 
     /**
-     * A Faire (08/05/21 LG En cours)
+     * A Faire (08/05/21 LG Finalisée)
      * <p>
      * MÃ©thode permettant de tester si les positions passÃ©es en paramÃ¨tre sont les positions de deux cases diffÃ©rentes et adjacentes
      * de la grille de jeu et qu'il est possible de passer d'une cas Ã  l'autre compte tenu des deux piÃ¨ces posÃ©es sur les deux cases du plateau.
