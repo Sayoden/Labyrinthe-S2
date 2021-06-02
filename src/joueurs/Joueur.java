@@ -80,7 +80,7 @@ public abstract class Joueur {
     }
 
     /**
-     * A Faire (23/05/2021 LG Finalisée)
+     * A Faire (23/05/2021 LG,LI Finalisée)
      * <p>
      * MÃ©thode retournant le nombre d'objets rÃ©cupÃ©rÃ©s par le joueur.
      *
@@ -92,7 +92,7 @@ public abstract class Joueur {
 
 
     /**
-     * A Faire (23/05/2021 LG Finalisée)
+     * A Faire (23/05/2021 LG,LI Finalisée)
      * <p>
      * MÃ©thode retournant la ligne du plateau sur laquelle se trouve le joueur.
      *
@@ -104,7 +104,7 @@ public abstract class Joueur {
 
 
     /**
-     * A Faire (23/05/2021 LG Finalisée)
+     * A Faire (23/05/2021 LG,LI Finalisée)
      * <p>
      * MÃ©thode retournant la colonne du plateau sur laquelle se trouve le joueur.
      *
@@ -116,7 +116,7 @@ public abstract class Joueur {
 
 
     /**
-     * A Faire (23/05/2021 LG Finalisée)
+     * A Faire (23/05/2021 LG,LI Finalisée)
      * <p>
      * MÃ©thode retournant le nom du joueur.
      *
@@ -127,7 +127,7 @@ public abstract class Joueur {
     }
 
     /**
-     * A Faire (23/05/2021 LG Finalisée)
+     * A Faire (23/05/2021 LG,LI Finalisée)
      * <p>
      * MÃ©thode retournant le numÃ©ro de l'image reprÃ©sentant le joueur.
      *
@@ -138,7 +138,7 @@ public abstract class Joueur {
     }
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (23/05/2021 LG,LI Finalisée)
      * <p>
      * MÃ©thode permettant d'affecter au joueur les objets qu'il devra rÃ©cupÃ©rer durant le jeu.
      * Attention : cette mÃ©thode devra crÃ©er un nouveau tableau pour l'attribut this.objetsARecuperer.
@@ -153,7 +153,7 @@ public abstract class Joueur {
     }
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (23/05/2021 LG,LI Finalisée)
      * <p>
      * MÃ©thode retournant un nouveau tableau contenant les objets attribuÃ©s au joueur. Des objets Ã  rÃ©cupÃ©rer devront Ãªtre
      * affectÃ©s au joueur avant tout appel de cette mÃ©thode (on suppose donc que l'attribut objetsJoueur est non null).
@@ -172,7 +172,7 @@ public abstract class Joueur {
 
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (23/05/2021 LG,LI Finalisée)
      * <p>
      * MÃ©thode retournant le prochain objet Ã  rÃ©cupÃ©rer par le joueur.
      * Avant d'appeler cette mÃ©thode il est nÃ©cessaire de s'assurer qu'il existe encore des objets Ã  rÃ©cupÃ©rer.
@@ -187,7 +187,7 @@ public abstract class Joueur {
     }
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (23/05/2021 LI Finalisée)
      * <p>
      * MÃ©thode permettant de rÃ©cupÃ©rer un nouvel objet. Cette mÃ©thode incrÃ©mente simplement de 1 le nombre d'objets qui ont Ã©tÃ© rÃ©cupÃ©rÃ©s.
      */
@@ -197,7 +197,7 @@ public abstract class Joueur {
 
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (23/05/2021 LI Finalisée)
      * <p>
      * MÃ©thode retournant le numÃ©ro du joueur.
      *
@@ -208,7 +208,7 @@ public abstract class Joueur {
     }
 
     /**
-     * A Faire (Quand Qui Statut)
+     * A Faire (23/05/2021 LG Finalisée)
      * <p>
      * MÃ©thode permettant le changement de position du joueur.
      *
