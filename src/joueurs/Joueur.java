@@ -2,6 +2,7 @@ package joueurs;
 
 import composants.Objet;
 import composants.Utils;
+import grafix.interfaceGraphique.IG;
 import partie.ElementsPartie;
 
 /**
