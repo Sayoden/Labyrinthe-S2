@@ -9,6 +9,7 @@ import joueurs.Joueur;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Cette classe permet de reprÃ©senter un ensemble d'Ã©lements composant une partie de jeu.
@@ -149,7 +150,7 @@ public class ElementsPartie {
         boolean hautBas;
         int ligne;
         int colonne;
-        int[] tableau = new int[]{6,4,2,0,-2,-4,-6};
+        int[] tableau = new int[]{6, 4, 2, 0, -2, -4, -6};
         if (choixEntree >= 0 && choixEntree <= 6) {
             //Haut vers le bas
             ligne = 0;
@@ -176,20 +177,131 @@ public class ElementsPartie {
         }
 
         Piece oldPiece = this.pieceLibre;
+        deplacerObjetsJoueurs(ligne, colonne, hautBas);
         for (int i = 0; i <= 6; i++) {
+            IG.pause(100);
+            IG.miseAJourAffichage();
+            int newLigne = (ligne == 0 ? ligne + i : ligne - i);
+            int newColonne = (colonne == 0 ? colonne + i : colonne - i);
             if (hautBas) {
-                int newLigne = (ligne == 0 ? ligne + i : ligne - i);
+                Piece oldPieceTmp = oldPiece;
                 IG.changerPiecePlateau(newLigne, colonne, oldPiece.getModelePiece(), oldPiece.getOrientationPiece());
                 oldPiece = this.plateau.getPiece(newLigne, colonne);
+                this.plateau.positionnePiece(oldPieceTmp, newLigne, colonne);
             } else {
-                int newColonne = (colonne == 0 ? colonne + i : colonne - i);
+                Piece oldPieceTmp = oldPiece;
                 IG.changerPiecePlateau(ligne, newColonne, oldPiece.getModelePiece(), oldPiece.getOrientationPiece());
                 oldPiece = this.plateau.getPiece(ligne, newColonne);
+                this.plateau.positionnePiece(oldPieceTmp, ligne, newColonne);
             }
-            IG.changerPieceHorsPlateau(oldPiece.getModelePiece(), oldPiece.getOrientationPiece());
-            this.pieceLibre = oldPiece;
         }
+        IG.changerPieceHorsPlateau(oldPiece.getModelePiece(), oldPiece.getOrientationPiece());
+        this.pieceLibre = oldPiece;
+        IG.pause(400);
+        IG.deselectionnerFleche();
         IG.miseAJourAffichage();
+    }
+
+    public void deplacerObjetsJoueurs(int ligne, int colonne, boolean hautBas) {
+        int ligneTmp = ligne;
+        int colonneTmp = colonne;
+
+        List<Objet> listeObjets = new ArrayList<>();
+        List<Joueur> listeJoueurs = new ArrayList<>();
+        for (int i = 0; i <= 6; i++) {
+            int newLigne = (ligneTmp == 0 ? ligneTmp + i : ligneTmp - i);
+            int newColonne = (colonneTmp == 0 ? colonneTmp + i : colonneTmp - i);
+
+            Objet objet;
+            Joueur joueur;
+            if (hautBas) {
+                objet = objetIci(newLigne, colonne);
+                joueur = joueurIci(newLigne, colonne);
+            } else {
+                objet = objetIci(ligne, newColonne);
+                joueur = joueurIci(ligne, newColonne);
+            }
+
+            if (objet != null) {
+                listeObjets.add(objet);
+            }
+
+            if (joueur != null) {
+                listeJoueurs.add(joueur);
+            }
+        }
+
+        for (int i = 0; i < listeObjets.size(); i++) {
+            Objet obj = listeObjets.get(i);
+            IG.enleverObjetPlateau(obj.getPosLignePlateau(), obj.getPosColonnePlateau());
+        }
+
+        for (int i = 0; i < listeJoueurs.size(); i++) {
+            Joueur joueur = listeJoueurs.get(i);
+            int LigObj = joueur.getPosLigne();
+            int ColObj = joueur.getPosColonne();
+            int newLigne = (ligne == 0 ? LigObj + 1 : LigObj - 1);
+            int newColonne = (colonne == 0 ? ColObj + 1 : ColObj - 1);
+
+            if (hautBas) {
+                IG.placerJoueurSurPlateau(joueur.getNumJoueur(), (newLigne == -1) ? 6 : newLigne % 7, colonne);
+                joueur.setPosition((newLigne == -1) ? 6 : newLigne % 7, colonne);
+            } else {
+                IG.placerJoueurSurPlateau(joueur.getNumJoueur(), ligne,  (newColonne == -1) ? 6 : newColonne % 7);
+                joueur.setPosition(ligne, (newColonne == -1) ? 6 : newColonne % 7);
+            }
+
+        }
+        for (int i = 0; i < listeObjets.size(); i++) {
+            Objet obj = listeObjets.get(i);
+            int LigObj = obj.getPosLignePlateau();
+            int ColObj = obj.getPosColonnePlateau();
+            int newLigne = (ligne == 0 ? LigObj + 1 : LigObj - 1);
+            int newColonne = (colonne == 0 ? ColObj + 1 : ColObj - 1);
+
+            if (hautBas) {
+                obj.positionneObjet((newLigne == -1 ? 6 : newLigne % 7), colonne);
+            } else {
+                obj.positionneObjet(ligne, (newColonne == -1 ? 6 : newColonne % 7));
+            }
+        }
+    }
+
+    /**
+     * Méthode permettant de voir si un objet est présent à tel
+     * endroit du plateau
+     *
+     * @param ligne
+     * @param colonne
+     * @return - l'objet en question
+     */
+    public Objet objetIci(int ligne, int colonne) {
+        for (int i = 0; i < 18; i++) {
+            if (this.objets[i].getPosLignePlateau() == ligne && this.objets[i].getPosColonnePlateau() == colonne) {
+                if (this.objets[i].surPlateau()) {
+                    return this.objets[i];
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Méthode permettant de voir si un joueur est présent
+     * à tel endroit du plateau
+     *
+     * @param ligne
+     * @param colonne
+     * @return - le joueur en question
+     */
+    public Joueur joueurIci(int ligne, int colonne) {
+        for (int i = 0; i < getJoueurs().length; i++) {
+            if (getJoueurs()[i].getPosLigne() == ligne && getJoueurs()[i].getPosColonne() == colonne) {
+                return getJoueurs()[i];
+            }
+        }
+
+        return null;
     }
 
     /**

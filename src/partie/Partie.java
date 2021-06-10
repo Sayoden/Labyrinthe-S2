@@ -7,6 +7,8 @@ import grafix.interfaceGraphique.IG;
 import joueurs.Joueur;
 import joueurs.JoueurOrdinateur;
 
+import java.util.Arrays;
+
 public class Partie {
     static double version = 0.0;
 
@@ -21,6 +23,31 @@ public class Partie {
     public Partie() {
         // Initialisation de la partie
         parametrerEtInitialiser();
+
+        IG.placerJoueurSurPlateau(0, 0, 0);
+        IG.placerJoueurSurPlateau(1, 0, 6);
+        if (this.elementsPartie.getNombreJoueurs() == 3) {
+            IG.placerJoueurSurPlateau(2, 6, 6);
+        }
+        for (Joueur joueur : this.elementsPartie.getJoueurs()) {
+            IG.changerImageJoueur(joueur.getNumJoueur(), joueur.getNumeroImagePersonnage());
+            IG.changerNomJoueur(joueur.getNumJoueur(), joueur.getNomJoueur() + " (" + joueur.getCategorie() + ")");
+            int i = 0;
+            for (Objet objet : joueur.getObjetsJoueur()) {
+                IG.changerObjetJoueur(joueur.getNumJoueur(), objet.getNumeroObjet(), i);
+                i++;
+            }
+        }
+        Plateau plateau = this.elementsPartie.getPlateau();
+        Piece pieceHorsPlateau = this.elementsPartie.getPieceLibre();
+
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
+                IG.changerPiecePlateau(i, j, plateau.getPiece(i, j).getModelePiece(), plateau.getPiece(i, j).getOrientationPiece());
+            }
+        }
+        IG.changerPieceHorsPlateau(pieceHorsPlateau.getModelePiece(), pieceHorsPlateau.getOrientationPiece());
+        IG.miseAJourAffichage();
 
         System.out.println(elementsPartie.toString());
 
@@ -49,30 +76,83 @@ public class Partie {
      * MÃ©thode permettant de lancer une partie.
      */
     public void lancer() {
-        IG.placerJoueurSurPlateau(0, 0, 0);
-        IG.placerJoueurSurPlateau(1, 0, 6);
-        if (this.elementsPartie.getNombreJoueurs() == 3) {
-            IG.placerJoueurSurPlateau(2, 6, 6);
-        }
-        for (Joueur joueur : this.elementsPartie.getJoueurs()) {
-            IG.changerImageJoueur(joueur.getNumJoueur(), joueur.getNumeroImagePersonnage());
-            IG.changerNomJoueur(joueur.getNumJoueur(), joueur.getNomJoueur() + " (" + joueur.getCategorie() + ")");
-            int i = 0;
-            for (Objet objet : joueur.getObjetsJoueur()) {
-                IG.changerObjetJoueur(joueur.getNumJoueur(), objet.getNumeroObjet(), i);
-                i++;
-            }
-        }
-        Plateau plateau = this.elementsPartie.getPlateau();
-        Piece pieceHorsPlateau = this.elementsPartie.getPieceLibre();
+        String[] messageOrientation = {
+                "",
+                "%joueur% : Vous pouvez orienter",
+                "la pièce hors du plateau",
+                "Ensuite selectionnez une flèche"
+        };
 
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 7; j++) {
-                IG.changerPiecePlateau(i, j, plateau.getPiece(i, j).getModelePiece(), plateau.getPiece(i, j).getOrientationPiece());
+        String[] messageChoixChemin = {
+                "",
+                "%joueur% : Choisissez un",
+                "chemin"
+        };
+        int intJoueurs = 0;
+
+        while (true) {
+            //On récupère le joueur
+            Joueur joueur = this.elementsPartie.getJoueurs()[intJoueurs];
+            IG.changerObjetSelectionne(joueur.getProchainObjet().getNumeroObjet());
+
+            //On modifie %joueur% par le nom du joueur actuel
+            String[] modifMessage = messageOrientation.clone();
+            modifMessage[1] = modifMessage[1].replace("%joueur%", joueur.getNomJoueur());
+
+            String[] modifMessage2 = messageChoixChemin.clone();
+            modifMessage2[1] = modifMessage2[1].replace("%joueur%", joueur.getNomJoueur());
+
+            IG.afficherMessage(modifMessage);
+            IG.changerJoueurSelectionne(intJoueurs);
+            IG.miseAJourAffichage();
+            int fleche = IG.attendreChoixEntree();
+            elementsPartie.insertionPieceLibre(fleche);
+            IG.afficherMessage(modifMessage2);
+            IG.miseAJourAffichage();
+
+            //On oblige le joueur a choisir un chemin possible
+            int[] caseTmp;
+            while (true) {
+                caseTmp = joueur.choisirCaseArrivee(elementsPartie);
+                int[][] chemin = elementsPartie.getPlateau().calculeChemin(joueur.getPosLigne(), joueur.getPosColonne(), caseTmp[0], caseTmp[1]);
+                if (chemin != null) {
+                    for (int[] ints : chemin) {
+                        IG.miseAJourAffichage();
+                        IG.placerJoueurSurPlateau(joueur.getNumJoueur(), ints[0], ints[1]);
+                        joueur.setPosition(ints[0], ints[1]);
+                        IG.pause(150);
+                    }
+                    break;
+                }
             }
+
+            Objet objet = elementsPartie.objetIci(caseTmp[0], caseTmp[1]);
+            if (objet != null && joueur.getProchainObjet() != null) {
+                if (joueur.getProchainObjet().equals(objet)) {
+                    if (objet.surPlateau()) {
+                        IG.changerObjetJoueurAvecTransparence(joueur.getNumJoueur(), joueur.getProchainObjet().getNumeroObjet(), joueur.getNombreObjetsRecuperes());
+                        objet.enleveDuPlateau();
+                        joueur.recupererObjet();
+                    }
+                }
+            }
+            IG.miseAJourAffichage();
+
+            if (joueur.getNombreObjetsRecuperes() == (18 / elementsPartie.getNombreJoueurs())) {
+                IG.afficherGagnant(joueur.getNumJoueur());
+                String[] messageGagnant = {
+                        "",
+                        "%joueur% : Félicitation !",
+                        "Vous avez gagné ! :o"
+                };
+                modifMessage2 = messageGagnant.clone();
+                modifMessage2[1] = modifMessage2[1].replace("%joueur%", joueur.getNomJoueur());
+                IG.afficherMessage(modifMessage2);
+                IG.miseAJourAffichage();
+                break;
+            }
+            intJoueurs = (intJoueurs + 1) % elementsPartie.getNombreJoueurs();
         }
-        IG.changerPieceHorsPlateau(pieceHorsPlateau.getModelePiece(), pieceHorsPlateau.getOrientationPiece());
-        IG.miseAJourAffichage();
     }
 
     /**

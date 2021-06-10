@@ -115,6 +115,8 @@ public class Objet {
      */
     public void enleveDuPlateau() {
         this.surPlateau = false;
+        IG.enleverObjetPlateau(getPosLignePlateau(), getPosColonnePlateau());
+        IG.miseAJourAffichage();
         this.posLignePlateau = -1;
         this.posColonnePlateau = -1;
     }
