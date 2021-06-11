@@ -105,8 +105,8 @@ public class Partie {
             IG.afficherMessage(modifMessage);
             IG.changerJoueurSelectionne(intJoueurs);
             IG.miseAJourAffichage();
-            int fleche = IG.attendreChoixEntree();
-            elementsPartie.insertionPieceLibre(fleche);
+            int[] choixOrientation = joueur.choisirOrientationEntree(elementsPartie);
+            elementsPartie.insertionPieceLibre(choixOrientation[1]);
             IG.afficherMessage(modifMessage2);
             IG.miseAJourAffichage();
 
@@ -114,6 +114,9 @@ public class Partie {
             int[] caseTmp;
             while (true) {
                 caseTmp = joueur.choisirCaseArrivee(elementsPartie);
+                if (caseTmp == null) {
+                    caseTmp = new int[]{joueur.getPosLigne(), joueur.getPosColonne()};
+                }
                 int[][] chemin = elementsPartie.getPlateau().calculeChemin(joueur.getPosLigne(), joueur.getPosColonne(), caseTmp[0], caseTmp[1]);
                 if (chemin != null) {
                     for (int[] ints : chemin) {
