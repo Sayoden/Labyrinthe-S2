@@ -40,3 +40,33 @@ Début du code le 6 mai
 
 26 mai : modification étape 4 des méthodes ainsi que de l'ajout de TestJoueur
 
+
+## Etape 5 
+
+29 mai : lecture de l'étape 5
+
+31 mai : début de l'étape 5
+
+01 juin : modifications apportées sur le code
+
+02 juin : finalisation de 'l'étape 5
+
+7 juin : grosses corrections sur l'étape 5
+
+11 juin : finition des corrections
+
+
+## Etape 6
+
+6 juin : lecture de l'énoncé
+
+11 juin : finition de deux joueurs ordinateurs 
+
+
+## Rapport de projet
+
+6 juin : idées et plans
+
+7 juin : début de la rédaction
+
+8 juin : finition de la page de présentation ainsi que le sommaire
