@@ -62,6 +62,7 @@ Début du code le 6 mai
 
 11 juin : finition de deux joueurs ordinateurs 
 
+12 juin : finalisation de toute l'étape 6
 
 ## Rapport de projet
 
@@ -70,3 +71,5 @@ Début du code le 6 mai
 7 juin : début de la rédaction
 
 8 juin : finition de la page de présentation ainsi que le sommaire
+
+12 juin : finition du rapport, relecture en cours
