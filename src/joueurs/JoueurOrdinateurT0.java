@@ -8,28 +8,24 @@ import partie.ElementsPartie;
 
 
 /**
- *
  * Cette classe permet de reprÃ©senter un joueur ordinateur de type T0.
  *
  * @author Jean-FranÃ§ois Condotta - 2021
- *
  */
 
 public class JoueurOrdinateurT0 extends JoueurOrdinateur {
 
     /**
-     *
      * Constructeur permettant de crÃ©er un joueur.
      *
-     * @param numJoueur Le numÃ©ro du joueur.
-     * @param nomJoueur Le nom du joueur.
+     * @param numJoueur             Le numÃ©ro du joueur.
+     * @param nomJoueur             Le nom du joueur.
      * @param numeroImagePersonnage Le numÃ©ro de l'image reprÃ©sentant le joueur.
-     * @param posLignePlateau La ligne du plateau sur laquelle est positionnÃ©e le joueur.
-     * @param posColonnePlateau La colonne du plateau sur laquelle est positionnÃ©e le joueur.
-
+     * @param posLignePlateau       La ligne du plateau sur laquelle est positionnÃ©e le joueur.
+     * @param posColonnePlateau     La colonne du plateau sur laquelle est positionnÃ©e le joueur.
      */
-    public JoueurOrdinateurT0(int numJoueur,String nomJoueur, int numeroImagePersonnage,int posLignePlateau,int posColonnePlateau) {
-        super(numJoueur,nomJoueur, numeroImagePersonnage,posLignePlateau,posColonnePlateau);
+    public JoueurOrdinateurT0(int numJoueur, String nomJoueur, int numeroImagePersonnage, int posLignePlateau, int posColonnePlateau) {
+        super(numJoueur, nomJoueur, numeroImagePersonnage, posLignePlateau, posColonnePlateau);
     }
 
     @Override
@@ -38,24 +34,18 @@ public class JoueurOrdinateurT0 extends JoueurOrdinateur {
     }
 
     /**
-     * Cette IA prendra aléatoirement soit une fleche
-     * sur l'objet concerné soit sur lui pour le faire bouger
-     * dans les deux cas, soit l'objet bouge, soit le joueur
-     *
-     * Il y a 10% de chance que l'IA ne sache pas quoi faire
-     * et choisisse aléatoirement une flèche dans le plateau
+     * Cette IA choisira une insertion piece libre aléatoirement
+     * comme pourrait le faire un humain ne sachant pas quoi faire
      *
      * @param elementsPartie
      * @return
      */
     @Override
     public int[] choisirOrientationEntree(ElementsPartie elementsPartie) {
-
-            int resultat[]=new int[2];
-            resultat[1]= Utils.genererEntier(27);
-            resultat[0]=IG.recupererOrientationPieceHorsPlateau();
-            return resultat;
-
+        int resultat[] = new int[2];
+        resultat[1] = Utils.genererEntier(27);
+        resultat[0] = IG.recupererOrientationPieceHorsPlateau();
+        return resultat;
     }
 
     /**
@@ -80,10 +70,10 @@ public class JoueurOrdinateurT0 extends JoueurOrdinateur {
     }
 
     @Override
-    public Joueur copy(Objet objets[]){
-        Joueur nouveauJoueur=new JoueurOrdinateurT0(getNumJoueur(),getNomJoueur(), getNumeroImagePersonnage(),getPosLigne(),getPosColonne());
+    public Joueur copy(Objet objets[]) {
+        Joueur nouveauJoueur = new JoueurOrdinateurT0(getNumJoueur(), getNomJoueur(), getNumeroImagePersonnage(), getPosLigne(), getPosColonne());
         nouveauJoueur.setObjetsJoueur(this.getObjetsJoueurGeneral(objets));
-        while (nouveauJoueur.getNombreObjetsRecuperes()!=this.getNombreObjetsRecuperes())
+        while (nouveauJoueur.getNombreObjetsRecuperes() != this.getNombreObjetsRecuperes())
             nouveauJoueur.recupererObjet();
         return nouveauJoueur;
     }

@@ -3,6 +3,10 @@ package joueurs;
 import grafix.interfaceGraphique.IG;
 import partie.ElementsPartie;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 
 /**
  *
@@ -57,7 +61,29 @@ public abstract class JoueurOrdinateur extends Joueur {
     }
 
 
-
+    /**
+     * Cette méthode permet de retourner tous les chemins possible
+     * dans un rayon donné en paramètre
+     *
+     * @param range
+     * @param elementsPartie
+     * @return
+     */
+    public List<int[]> obtenisCheminsACote(int range, ElementsPartie elementsPartie) {
+        List<int[]> chemins = new ArrayList<>();
+        for (int i = getPosLigne() - range; i < getPosLigne() + range; i++) {
+            for (int y = getPosColonne() - range; y < getPosColonne() + range; y++) {
+                if ((i >= 0 && i <= 6) && (y >= 0 && y <= 6)) {
+                    // C'est une case dans le plateau
+                    int[][] cheminsTmp = elementsPartie.getPlateau().calculeChemin(getPosLigne(), getPosColonne(), i, y);
+                    if (cheminsTmp != null) {
+                        chemins.add(cheminsTmp[cheminsTmp.length - 1]);
+                    }
+                }
+            }
+        }
+        return chemins;
+    }
 
 
 }

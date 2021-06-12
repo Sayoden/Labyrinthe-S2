@@ -74,18 +74,7 @@ public class JoueurOrdinateurT1 extends JoueurOrdinateur {
                 return cheminPossible[cheminPossible.length - 1];
             }
         }  else {
-            List<int[]> chemins = new ArrayList<>();
-            for (int i = getPosLigne() - 3; i < getPosLigne() + 3; i++) {
-                for (int y = getPosColonne() - 3; y < getPosColonne() + 3; y++) {
-                    // C'est une case dans le plateau
-                    if ((i >= 0 && i <= 6) && (y >= 0 && y <= 6)) {
-                        int[][] cheminsTmp = elementsPartie.getPlateau().calculeChemin(getPosLigne(), getPosColonne(), i, y);
-                        if (cheminsTmp != null) {
-                            chemins.add(cheminsTmp[cheminsTmp.length - 1]);
-                        }
-                    }
-                }
-            }
+            List<int[]> chemins = obtenisCheminsACote(3, elementsPartie);
             if (chemins.size() > 0) {
                 Collections.shuffle(chemins);
                 return chemins.get(0);

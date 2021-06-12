@@ -138,19 +138,19 @@ public class ElementsPartie {
         return this.nombreJoueurs;
     }
 
-
     /**
-     * A Faire (01/06/2021 LG,CD,AG Finalisée)
-     * <p>
-     * MÃ©thode modifiant les diffÃ©rents Ã©lÃ©ments de la partie suite Ã  l'insertion de la piÃ¨ce libre dans le plateau.
+     * Permet d'obtenir des infos sur les coordonnées
+     * avec un simple choixEntree
      *
-     * @param choixEntree L'entrÃ©e choisie pour rÃ©aliser l'insertion (un nombre entre 0 et 27).
+     * @param choixEntree
+     * @return
      */
-    public void insertionPieceLibre(int choixEntree) {
-        boolean hautBas;
+    public List<Object> obtenirPosAvecChoixEntree(int choixEntree) {
+        List<Object> infos = new ArrayList<>();
+        int[] tableau = new int[]{6, 4, 2, 0, -2, -4, -6};
         int ligne;
         int colonne;
-        int[] tableau = new int[]{6, 4, 2, 0, -2, -4, -6};
+        boolean hautBas;
         if (choixEntree >= 0 && choixEntree <= 6) {
             //Haut vers le bas
             ligne = 0;
@@ -175,6 +175,26 @@ public class ElementsPartie {
                 hautBas = false;
             }
         }
+        infos.add(ligne);
+        infos.add(colonne);
+        infos.add(hautBas);
+
+        return infos;
+    }
+
+    /**
+     * A Faire (01/06/2021 LG,CD,AG Finalisée)
+     * <p>
+     * MÃ©thode modifiant les diffÃ©rents Ã©lÃ©ments de la partie suite Ã  l'insertion de la piÃ¨ce libre dans le plateau.
+     *
+     * @param choixEntree L'entrÃ©e choisie pour rÃ©aliser l'insertion (un nombre entre 0 et 27).
+     */
+    public void insertionPieceLibre(int choixEntree) {
+        List<Object> infos = obtenirPosAvecChoixEntree(choixEntree);
+        boolean hautBas = (boolean) infos.get(2);
+        int ligne = (int) infos.get(0);
+        int colonne = (int) infos.get(1);
+
 
         Piece oldPiece = this.pieceLibre;
         deplacerObjetsJoueurs(ligne, colonne, hautBas);
